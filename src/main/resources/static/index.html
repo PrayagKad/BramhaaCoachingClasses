@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bramhaa Coaching Classes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f3ee;--bg2:#eae8e0;--card:#fff;--card2:#fafaf7;
+  --border:#dddbd2;--border2:#bfbcb0;
+  --text:#18180f;--text2:#65625a;--text3:#9e9b8e;
+  --navy:#1a2545;--navy2:#0f1830;--navy3:#253268;
+  --red:#c0392b;--red2:#e74c3c;
+  --green:#1a6b3c;--green-bg:#e8f5ee;
+  --amber:#b8620a;--amber-bg:#fef3e2;
+  --blue:#1d5fa0;--blue-bg:#e8f0fa;
+  --sidebar:248px;
+  --font-display:'Playfair Display',serif;
+  --font-body:'Outfit',sans-serif;
+  --radius:10px;--radius-lg:16px;
+  --shadow:0 1px 4px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.05);
+  --shadow-lg:0 8px 40px rgba(0,0,0,0.13);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6}
+.app{display:flex;height:100vh;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:var(--sidebar);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0}
+.sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px}
+.bcc-logo-svg{flex-shrink:0}
+.sb-brand{line-height:1.2}
+.sb-brand-main{font-family:var(--font-display);font-size:14px;color:#fff;font-weight:700;letter-spacing:-0.2px}
+.sb-brand-sub{font-size:10px;color:rgba(255,255,255,0.38);text-transform:uppercase;letter-spacing:1px;font-weight:300;margin-top:1px}
+.nav{flex:1;padding:14px 10px;overflow-y:auto}
+.nav-sec{margin-bottom:22px}
+.nav-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.28);padding:0 10px;margin-bottom:5px;font-weight:500}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:13.5px;transition:all 0.14s}
+.nav-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.88)}
+.nav-item.active{background:var(--red);color:#fff}
+.nav-icon{width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,0.13);color:rgba(255,255,255,0.75);font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px}
+.nav-item.active .nav-badge{background:rgba(255,255,255,0.25)}
+.sb-foot{padding:14px;border-top:1px solid rgba(255,255,255,0.07)}
+.u-pill{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background 0.14s}
+.u-pill:hover{background:rgba(255,255,255,0.06)}
+.av{width:30px;height:30px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+.u-name{font-size:13px;font-weight:500;color:#fff}
+.u-role{font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.5px}
+
+/* ── Main ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:58px;border-bottom:1px solid var(--border);background:var(--card);display:flex;align-items:center;padding:0 26px;gap:12px;flex-shrink:0}
+.tb-title{font-family:var(--font-display);font-size:18px;font-weight:700;flex:1;color:var(--text)}
+.search-w{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px;width:230px;transition:border-color 0.14s}
+.search-w:focus-within{border-color:var(--navy)}
+.search-w input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:13px;width:100%}
+.search-w input::placeholder{color:var(--text3)}
+.content{flex:1;overflow-y:auto;padding:26px}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all 0.14s}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy2);transform:translateY(-1px)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a93226}
+.btn-ghost{background:var(--card);color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg2)}
+.btn-danger{background:#fdecea;color:var(--red);border:1px solid rgba(192,57,43,0.2)}.btn-danger:hover{background:#fbd5d1}
+.btn-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(26,107,60,0.2)}.btn-green:hover{background:#d0ecdb}
+.btn-sm{padding:5px 11px;font-size:12px}
+
+/* ── Stats ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.scard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow);transition:transform 0.14s,box-shadow 0.14s}
+.scard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.sc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.sc-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.sc-ico.navy{background:#e8eaf5}.sc-ico.red{background:#fdecea}.sc-ico.green{background:var(--green-bg)}.sc-ico.amber{background:var(--amber-bg)}
+.sc-lbl{font-size:12px;color:var(--text3);margin-bottom:3px}.sc-val{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--text);line-height:1}.sc-sub{font-size:11px;color:var(--text3);margin-top:5px}
+
+/* ── Table card ── */
+.tc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px}
+.tc-head{padding:15px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:var(--card2)}
+.tc-head h2{font-family:var(--font-display);font-size:15px;font-weight:700;flex:1}
+.fr{display:flex;gap:7px}
+.fsel{background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text2);padding:6px 10px;font-family:var(--font-body);font-size:12px;outline:none;cursor:pointer;transition:border-color 0.14s}
+.fsel:focus{border-color:var(--navy);color:var(--text)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:9px 15px;text-align:left;font-size:10.5px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;background:var(--bg2);border-bottom:1px solid var(--border)}
+tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;cursor:pointer}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--bg)}
+td{padding:11px 15px;font-size:13px;vertical-align:middle}
+.sc{display:flex;align-items:center;gap:9px}
+.sav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.sn{font-weight:500}.sd{font-size:11px;color:var(--text3)}
+.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.b-male{background:var(--blue-bg);color:var(--blue)}.b-female{background:#fce4ec;color:#b0125e}.b-other{background:var(--amber-bg);color:var(--amber)}
+.b-cls{background:var(--bg2);color:var(--text2);border:1px solid var(--border)}
+.b-rec{background:#e8eaf5;color:var(--navy3);border:1px solid #c5cadf}
+.acts{display:flex;gap:5px}
+.ib{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all 0.14s;font-size:12px}
+.ib:hover.e{background:var(--blue-bg);border-color:rgba(29,95,160,0.3);color:var(--blue)}
+.ib:hover.d{background:#fdecea;border-color:rgba(192,57,43,0.3);color:var(--red)}
+.ib:hover.r{background:var(--green-bg);border-color:rgba(26,107,60,0.3);color:var(--green)}
+
+/* ── Pagination ── */
+.pag{padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+.pag-i{font-size:12px;color:var(--text3)}
+.pag-b{display:flex;gap:4px}
+.pb{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:12px;color:var(--text2);display:flex;align-items:center;justify-content:center;transition:all 0.14s;font-family:var(--font-body)}
+.pb:hover{background:var(--bg2)}.pb.active{background:var(--navy);color:#fff;border-color:var(--navy)}.pb:disabled{opacity:0.35;cursor:default}
+
+/* ── Overlay / Modal ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.42);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border-radius:20px;width:580px;max-height:92vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform 0.22s;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+.overlay.open .modal{transform:translateY(0) scale(1)}
+.mh{padding:20px 22px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.mh h2{font-family:var(--font-display);font-size:17px;font-weight:700;flex:1}
+.mx{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:15px;transition:all 0.14s}
+.mx:hover{background:var(--bg2)}
+.mb{padding:20px 22px}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg.full{grid-column:span 2}
+.fl{font-size:12px;color:var(--text2);font-weight:500}
+.fi,.fs{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;transition:border-color 0.14s;width:100%}
+.fi:focus,.fs:focus{border-color:var(--navy)}
+.fi::placeholder{color:var(--text3)}
+.mf{padding:15px 22px;border-top:1px solid var(--border);display:flex;gap:9px;justify-content:flex-end}
+.ferr{color:var(--red);font-size:12px;margin-top:8px;display:none}
+
+/* ── Confirm modal ── */
+.conf-m{background:var(--card);border-radius:20px;width:350px;padding:30px;text-align:center;box-shadow:var(--shadow-lg);border:1px solid var(--border);transform:translateY(14px) scale(0.98);transition:transform 0.22s}
+.overlay.open .conf-m{transform:translateY(0) scale(1)}
+.ci{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 14px}
+.ci.r{background:#fdecea}.ct{font-family:var(--font-display);font-size:17px;font-weight:700;margin-bottom:7px}
+.cs{font-size:13px;color:var(--text2);margin-bottom:22px;line-height:1.6}
+.cb{display:flex;gap:9px;justify-content:center}
+
+/* ── Receipt modal ── */
+.rcpt-m{background:var(--card);border-radius:20px;width:660px;max-height:93vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform 0.22s;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+.overlay.open .rcpt-m{transform:translateY(0) scale(1)}
+
+/* ── RECEIPT PREVIEW — matches actual Bramhaa receipt ── */
+.rp{background:#fff;border:2px solid #333;font-family:'Arial',sans-serif;padding:0;overflow:hidden}
+.rp-top{padding:10px 14px 8px;border-bottom:2px solid #333;display:flex;gap:0}
+.rp-header{flex:1}
+.rp-tagline{font-size:10px;color:#555;margin-bottom:2px;font-style:italic}
+.rp-name{font-size:22px;font-weight:900;color:#1a2545;text-transform:uppercase;letter-spacing:-0.5px;line-height:1.1}
+.rp-addr{font-size:9px;color:#555;margin-top:3px}
+.rp-contact{font-size:10px;color:#333;margin-top:2px;font-weight:500}
+.rp-recno{border-left:2px solid #333;padding:6px 10px;display:flex;flex-direction:column;gap:8px;min-width:130px}
+.rp-recno-row{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;border:1px solid #333;padding:4px 7px}
+.rp-recno-label{white-space:nowrap}
+.rp-recno-val{font-size:14px;font-weight:900;letter-spacing:1px}
+.rp-subhead{background:#333;color:#fff;text-align:center;font-size:12px;font-weight:700;padding:4px;letter-spacing:2px;border-bottom:2px solid #333;display:flex;align-items:center;justify-content:center;gap:16px}
+.rp-mob-row{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#fff}
+.rp-body{padding:10px 14px}
+.rp-line{display:flex;align-items:flex-end;gap:0;margin-bottom:9px}
+.rp-lbl{font-size:12px;font-weight:700;color:#222;white-space:nowrap;min-width:110px}
+.rp-val{flex:1;border-bottom:1.5px solid #555;font-size:12px;padding:0 6px 1px;min-height:20px;color:#111}
+.rp-inline{display:flex;gap:14px;margin-bottom:9px}
+.rp-note{text-align:center;font-size:11px;font-weight:700;color:#333;margin:10px 0 6px;letter-spacing:0.3px}
+.rp-footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:8px;margin-top:6px;border-top:1.5px solid #333}
+.rp-sign{font-size:11px;font-weight:700;color:#333}
+.rp-forbcc{font-size:11px;font-weight:700;color:#333;text-align:right}
+
+/* ── Payment history ── */
+.ph-item{display:flex;align-items:center;gap:12px;padding:11px 15px;border-bottom:1px solid var(--border)}
+.ph-item:last-child{border-bottom:none}
+.ph-num{font-size:11px;font-weight:600;color:var(--navy);font-family:monospace;min-width:130px}
+.ph-date{font-size:12px;color:var(--text2);flex:1}
+.ph-amt{font-size:13px;font-weight:600;color:var(--green)}
+
+/* ── Class tabs ── */
+.ctabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.ctab{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text2);transition:all 0.14s}
+.ctab:hover{background:var(--bg2)}.ctab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ── Settings ── */
+.s-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.s-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow)}
+.s-sec h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:14px}
+.a-list{display:flex;flex-direction:column;gap:8px}
+.a-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border-radius:8px;border:1px solid var(--border)}
+.a-av{width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+.a-name{font-size:13px;font-weight:500;flex:1}
+
+/* ── Login ── */
+.login-pg{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:300}
+.login-pg.show{display:flex}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:24px;width:400px;box-shadow:var(--shadow-lg);overflow:hidden}
+.login-top{background:var(--navy);padding:0}
+.login-banner{padding:30px 28px 22px;display:flex;align-items:center;gap:16px}
+.login-info{flex:1}
+.login-ttl{font-family:var(--font-display);font-size:20px;color:#fff;font-weight:700;line-height:1.2}
+.login-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.8px;font-weight:300}
+.login-body{padding:24px 28px 28px}
+
+/* ── Empty ── */
+.empty{padding:55px 20px;text-align:center}
+.ei{font-size:38px;margin-bottom:10px}.et{font-size:14px;font-weight:600;color:var(--text2);margin-bottom:5px}.es{font-size:12px;color:var(--text3)}
+
+/* ── Toast ── */
+.tw{position:fixed;bottom:22px;right:22px;z-index:200;display:flex;flex-direction:column;gap:7px}
+.toast{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 15px;display:flex;align-items:center;gap:9px;min-width:250px;box-shadow:var(--shadow-lg);animation:ti 0.28s ease}
+@keyframes ti{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.td{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.toast.success .td{background:var(--green)}.toast.error .td{background:var(--red)}.toast.info .td{background:var(--navy)}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN PAGE ────────────────────────────────────── -->
+<div class="login-pg show" id="login-pg">
+  <div class="login-card">
+    <div class="login-top">
+      <div class="login-banner">
+        <!-- BCC Logo SVG -->
+        <svg width="60" height="60" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="120" rx="8" fill="white"/>
+          <rect x="4" y="4" width="112" height="112" rx="6" fill="none" stroke="#1a2545" stroke-width="3"/>
+          <!-- Book pages -->
+          <path d="M20 75 L58 60 L58 38 L20 53 Z" fill="#1a2545"/>
+          <path d="M100 75 L62 60 L62 38 L100 53 Z" fill="#1a2545"/>
+          <!-- Book spine lines -->
+          <line x1="25" y1="72" x2="57" y2="59" stroke="white" stroke-width="1.5"/>
+          <line x1="28" y1="76" x2="57" y2="63" stroke="white" stroke-width="1.5"/>
+          <line x1="95" y1="72" x2="63" y2="59" stroke="white" stroke-width="1.5"/>
+          <line x1="92" y1="76" x2="63" y2="63" stroke="white" stroke-width="1.5"/>
+          <!-- BCC text -->
+          <text x="60" y="57" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="18" fill="#c0392b">BCC</text>
+          <!-- EDUCATION text -->
+          <text x="60" y="90" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#1a2545" letter-spacing="3">EDUCATION</text>
+        </svg>
+        <div class="login-info">
+          <div class="login-ttl">Bramhaa Coaching Classes</div>
+          <div class="login-sub">Admin Portal</div>
+        </div>
+      </div>
+    </div>
+    <div class="login-body">
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div class="fg"><label class="fl">Username</label><input class="fi" id="l-u" placeholder="Enter username"/></div>
+        <div class="fg"><label class="fl">Password</label><input class="fi" id="l-p" type="password" placeholder="Enter password"/></div>
+        <p id="l-e" style="color:var(--red);font-size:12px;display:none"></p>
+        <button class="btn btn-red" style="width:100%;justify-content:center;padding:11px;margin-top:2px" onclick="doLogin()">Sign In →</button>
+        <p style="text-align:center;font-size:11px;color:var(--text3)">Only admins can access this portal</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP SHELL ─────────────────────────────────────── -->
+<div class="app" id="app" style="display:none">
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <svg class="bcc-logo-svg" width="40" height="40" viewBox="0 0 120 120" fill="none">
+        <rect width="120" height="120" rx="6" fill="white"/>
+        <rect x="4" y="4" width="112" height="112" rx="4" fill="none" stroke="#1a2545" stroke-width="3"/>
+        <path d="M20 75 L58 60 L58 38 L20 53 Z" fill="#1a2545"/>
+        <path d="M100 75 L62 60 L62 38 L100 53 Z" fill="#1a2545"/>
+        <line x1="25" y1="72" x2="57" y2="59" stroke="white" stroke-width="1.5"/>
+        <line x1="28" y1="76" x2="57" y2="63" stroke="white" stroke-width="1.5"/>
+        <line x1="95" y1="72" x2="63" y2="59" stroke="white" stroke-width="1.5"/>
+        <line x1="92" y1="76" x2="63" y2="63" stroke="white" stroke-width="1.5"/>
+        <text x="60" y="57" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="18" fill="#c0392b">BCC</text>
+        <text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="700" font-size="9" fill="#1a2545" letter-spacing="3">EDUCATION</text>
+      </svg>
+      <div class="sb-brand">
+        <div class="sb-brand-main">Bramhaa Coaching</div>
+        <div class="sb-brand-sub">Classes · Chakan, Pune</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-sec">
+        <div class="nav-lbl">Menu</div>
+        <div class="nav-item active" data-page="dashboard" onclick="gp('dashboard',this)"><span class="nav-icon">⊞</span> Dashboard</div>
+        <div class="nav-item" data-page="students" onclick="gp('students',this)"><span class="nav-icon">👥</span> Students <span class="nav-badge" id="nav-cnt">0</span></div>
+        <div class="nav-item" data-page="byclass" onclick="gp('byclass',this)"><span class="nav-icon">🎓</span> By Class</div>
+        <div class="nav-item" data-page="receipts" onclick="gp('receipts',this)"><span class="nav-icon">🧾</span> Receipts</div>
+      </div>
+      <div class="nav-sec">
+        <div class="nav-lbl">Account</div>
+        <div class="nav-item" data-page="settings" onclick="gp('settings',this)"><span class="nav-icon">⚙</span> Settings</div>
+        <div class="nav-item" onclick="logout()"><span class="nav-icon">↩</span> Logout</div>
+      </div>
+    </nav>
+    <div class="sb-foot">
+      <div class="u-pill">
+        <div class="av" id="sb-av">A</div>
+        <div><div class="u-name" id="sb-nm">Admin</div><div class="u-role">Administrator</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="tb-title" id="tb-t">Dashboard</div>
+      <div class="search-w">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="s-in" placeholder="Search students…" oninput="handleSearch(this.value)"/>
+      </div>
+      <button class="btn btn-red" onclick="openAdd()">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Add Student
+      </button>
+    </header>
+    <div class="content" id="ct"></div>
+  </div>
+</div>
+
+<!-- ── ADD / EDIT STUDENT MODAL ───────────────────────── -->
+<div class="overlay" id="stu-m">
+  <div class="modal">
+    <div class="mh"><h2 id="sm-t">Add New Student</h2><button class="mx" onclick="co('stu-m')">✕</button></div>
+    <div class="mb">
+      <div class="fg2">
+        <div class="fg full"><label class="fl">Student Name *</label><input class="fi" id="f-sn" placeholder="e.g. Rahul Sharma"/></div>
+        <div class="fg"><label class="fl">Date of Birth *</label><input class="fi" id="f-dob" type="date"/></div>
+        <div class="fg"><label class="fl">Class / Standard</label>
+          <select class="fs" id="f-cls"><option value="">Select class</option>
+            <option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option><option>6th</option>
+            <option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Gender</label>
+          <select class="fs" id="f-gen"><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option></select>
+        </div>
+        <div class="fg"><label class="fl">School Name</label><input class="fi" id="f-sch" placeholder="e.g. Delhi Public School"/></div>
+        <div class="fg"><label class="fl">Parent Name</label><input class="fi" id="f-par" placeholder="e.g. Suresh Sharma"/></div>
+        <div class="fg"><label class="fl">Parent Education</label><input class="fi" id="f-ped" placeholder="e.g. Graduate"/></div>
+        <div class="fg"><label class="fl">Mobile Number</label><input class="fi" id="f-mob" placeholder="10-digit" maxlength="10"/></div>
+        <div class="fg"><label class="fl">Aadhar Card</label><input class="fi" id="f-aad" placeholder="12-digit" maxlength="12"/></div>
+        <div class="fg full"><label class="fl">Address</label><input class="fi" id="f-addr" placeholder="Full address"/></div>
+      </div>
+      <p class="ferr" id="sm-e"></p>
+    </div>
+    <div class="mf">
+      <button class="btn btn-ghost" onclick="co('stu-m')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveStu()" id="sm-sv">Save Student</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DELETE CONFIRM ─────────────────────────────────── -->
+<div class="overlay" id="del-m">
+  <div class="conf-m">
+    <div class="ci r">🗑</div>
+    <div class="ct">Delete Student?</div>
+    <div class="cs" id="del-msg">This cannot be undone.</div>
+    <div class="cb">
+      <button class="btn btn-ghost" onclick="co('del-m')">Cancel</button>
+      <button class="btn btn-danger" id="del-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── RECEIPT MODAL ──────────────────────────────────── -->
+<div class="overlay" id="rc-m">
+  <div class="rcpt-m">
+    <div class="mh"><h2 id="rc-t">Fee Receipt</h2><button class="mx" onclick="co('rc-m')">✕</button></div>
+    <div class="mb">
+      <!-- FORM -->
+      <div id="rc-form">
+        <div class="fg2">
+          <div class="fg full"><label class="fl">Student</label><input class="fi" id="rc-sn" readonly style="background:var(--bg2);color:var(--text2)"/></div>
+          <div class="fg"><label class="fl">Admission Fees (₹)</label><input class="fi" id="rc-af" type="number" placeholder="optional" min="0"/></div>
+          <div class="fg"><label class="fl">Total Fees (₹)</label><input class="fi" id="rc-tf" type="number" placeholder="optional" min="0"/></div>
+          <div class="fg"><label class="fl">Remaining Fees (₹)</label><input class="fi" id="rc-rf" type="number" placeholder="optional" min="0"/></div>
+          <div class="fg"><label class="fl">Amount Paid (₹)</label><input class="fi" id="rc-ap" type="number" placeholder="optional" min="0"/></div>
+          <div class="fg"><label class="fl">Payment Date *</label><input class="fi" id="rc-dt" type="date"/></div>
+          <div class="fg"><label class="fl">Total Fees Dated On</label><input class="fi" id="rc-fd" type="date"/></div>
+          <div class="fg full"><label class="fl">Remarks</label><input class="fi" id="rc-rm" placeholder="e.g. Monthly fee for April 2026"/></div>
+        </div>
+        <p class="ferr" id="rc-e"></p>
+      </div>
+      <!-- RECEIPT PREVIEW (shown after generate) -->
+      <div id="rc-preview" style="display:none">
+        <div class="rp" id="receipt-print-area">
+          <div class="rp-top">
+            <div class="rp-header">
+              <div class="rp-tagline">Welcome For Our New Visions With High Goals...</div>
+              <div class="rp-name">Bramhaa Coaching Classes</div>
+              <div class="rp-addr">4th Floor, Chatrapati Capital, Chakan-Shikrapur Road, opp. Shantanu hotel, Chakan, Khed, Pune - 410 501</div>
+              <div class="rp-contact">Contact : 8637727547</div>
+            </div>
+            <div class="rp-recno">
+              <div class="rp-recno-row"><span class="rp-recno-label">Rec. No.</span><span class="rp-recno-val" id="pr-rn">—</span></div>
+              <div class="rp-recno-row"><span class="rp-recno-label">Date :</span><span class="rp-recno-val" id="pr-dt" style="font-size:11px">—</span></div>
+            </div>
+          </div>
+          <div class="rp-subhead">
+            <span>RECEIPT</span>
+            <span class="rp-mob-row">Mob.No.: <span id="pr-mob" style="margin-left:4px">—</span></span>
+          </div>
+          <div class="rp-body">
+            <div class="rp-line"><span class="rp-lbl">Student Name :</span><span class="rp-val" id="pr-sn">—</span></div>
+            <div class="rp-inline">
+              <div class="rp-line" style="flex:2"><span class="rp-lbl">Parents Name :</span><span class="rp-val" id="pr-pn">—</span></div>
+              <div class="rp-line" style="flex:1"><span class="rp-lbl" style="min-width:35px">Std.:</span><span class="rp-val" id="pr-std">—</span></div>
+            </div>
+            <div class="rp-line"><span class="rp-lbl">School Name</span><span class="rp-val" id="pr-sch">—</span></div>
+            <div class="rp-inline">
+              <div class="rp-line" style="flex:1"><span class="rp-lbl">Add.:</span><span class="rp-val" id="pr-addr">—</span></div>
+              <div style="font-size:11px;font-weight:700;color:#333;align-self:flex-end;padding-bottom:2px;white-space:nowrap;padding-left:8px">For Bramhaa Coaching Classes</div>
+            </div>
+            <div class="rp-inline">
+              <div class="rp-line" style="flex:1"><span class="rp-lbl">Admission Fees :</span><span class="rp-val" id="pr-af">—</span></div>
+              <div class="rp-line" style="flex:1"><span class="rp-lbl" style="min-width:80px">Total Fees :</span><span class="rp-val" id="pr-tf">—</span></div>
+            </div>
+            <div class="rp-line"><span class="rp-lbl">Remaining Fees :</span><span class="rp-val" id="pr-rf">—</span></div>
+            <div class="rp-line"><span class="rp-lbl">Total Fees Dated on :</span><span class="rp-val" id="pr-fd">—</span></div>
+            <div class="rp-note">NOTE : Fees Once Paid will not be Refunded.</div>
+            <div class="rp-footer">
+              <div class="rp-sign">Parent's / Student's Sign</div>
+              <div class="rp-forbcc">For : Bramhaa Coaching Class</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Payment history -->
+      <div id="ph-wrap" style="margin-top:14px;display:none">
+        <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:7px">Payment History</div>
+        <div class="tc" id="ph-list"></div>
+      </div>
+    </div>
+    <div class="mf" id="rc-foot">
+      <button class="btn btn-ghost" onclick="co('rc-m')">Cancel</button>
+      <button class="btn btn-primary" onclick="createReceipt()">Generate Receipt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CREATE ADMIN MODAL ─────────────────────────────── -->
+<div class="overlay" id="adm-m">
+  <div class="modal" style="width:400px">
+    <div class="mh"><h2>Create New Admin</h2><button class="mx" onclick="co('adm-m')">✕</button></div>
+    <div class="mb">
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div class="fg"><label class="fl">Username *</label><input class="fi" id="a-u" placeholder="New admin username"/></div>
+        <div class="fg"><label class="fl">Password *</label><input class="fi" id="a-p" type="password" placeholder="Min. 6 characters"/></div>
+        <div class="fg"><label class="fl">Confirm Password *</label><input class="fi" id="a-cp" type="password" placeholder="Repeat password"/></div>
+        <p class="ferr" id="a-e"></p>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn btn-ghost" onclick="co('adm-m')">Cancel</button>
+      <button class="btn btn-primary" onclick="createAdmin()">Create Admin</button>
+    </div>
+  </div>
+</div>
+
+<div class="tw" id="tw"></div>
+
+<script>
+const API='http://localhost:8080/api';
+const CLS=['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
+const AVC=['#1a2545','#c0392b','#1a6b3c','#1d5fa0','#b8620a','#7b2d8b','#0e7490'];
+let TOKEN=localStorage.getItem('t')||'', ME=JSON.parse(localStorage.getItem('me')||'null');
+let students=[],filtered=[],editId=null,rcStuId=null,curPg='dashboard',pg=1;
+const PZ=8;
+const $=id=>document.getElementById(id);
+const ini=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+const avc=n=>{let s=0;for(let c of(n||'A'))s+=c.charCodeAt(0);return AVC[s%AVC.length];};
+const fmt=d=>d?new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+const fmtN=v=>v!=null&&v!==''?'₹'+Number(v).toLocaleString('en-IN'):'—';
+const ov=id=>$(id).classList.add('open');
+const co=id=>$(id).classList.remove('open');
+
+async function api(url,method='GET',body=null){
+  const o={method,headers:{'Content-Type':'application/json','Authorization':`Bearer ${TOKEN}`}};
+  if(body)o.body=JSON.stringify(body);
+  const r=await fetch(API+url,o);
+  if(r.status===401){logout();return null;}
+  if(!r.ok){const e=await r.json().catch(()=>({message:'Request failed'}));throw new Error(e.message||'Request failed');}
+  return r.status===204?null:r.json();
+}
+
+// ── Auth ─────────────────────────────────────────────────
+async function doLogin(){
+  const u=$('l-u').value.trim(),p=$('l-p').value.trim(),e=$('l-e');
+  e.style.display='none';
+  if(!u||!p){e.textContent='Enter username and password';e.style.display='block';return;}
+  try{
+    const r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+    if(!r.ok){const er=await r.json();throw new Error(er.message||'Login failed');}
+    const d=await r.json();
+    if(d.role!=='ADMIN'){e.textContent='Access denied. Admin accounts only.';e.style.display='block';return;}
+    TOKEN=d.token;ME={username:d.username,role:d.role};
+    localStorage.setItem('t',TOKEN);localStorage.setItem('me',JSON.stringify(ME));
+    $('login-pg').classList.remove('show');$('app').style.display='flex';
+    boot();
+  }catch(err){e.textContent=err.message;e.style.display='block';}
+}
+function logout(){TOKEN='';ME=null;localStorage.removeItem('t');localStorage.removeItem('me');$('app').style.display='none';$('login-pg').classList.add('show');$('l-p').value='';}
+
+// ── Boot ─────────────────────────────────────────────────
+function boot(){
+  if(!TOKEN){$('login-pg').classList.add('show');return;}
+  $('sb-nm').textContent=ME?.username||'Admin';
+  $('sb-av').textContent=ini(ME?.username||'Admin');
+  loadStudents();
+  gp('dashboard',document.querySelector('[data-page="dashboard"]'));
+}
+
+async function loadStudents(){
+  try{students=await api('/students')||[];filtered=[...students];$('nav-cnt').textContent=students.length;rc();}
+  catch(e){toast('Failed to load students','error');}
+}
+
+// ── Page routing ──────────────────────────────────────────
+function gp(pg2,el){
+  curPg=pg2;
+  document.querySelectorAll('.nav-item[data-page]').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  const T={dashboard:'Dashboard',students:'Students',byclass:'Students by Class',receipts:'All Receipts',settings:'Settings'};
+  $('tb-t').textContent=T[pg2]||pg2;
+  rc();
+}
+function rc(){
+  if(curPg==='dashboard')rDash();
+  else if(curPg==='students')rStudents();
+  else if(curPg==='byclass')rByClass();
+  else if(curPg==='receipts')rReceipts();
+  else if(curPg==='settings')rSettings();
+}
+
+// ── Dashboard ─────────────────────────────────────────────
+function rDash(){
+  const tot=students.length,male=students.filter(s=>s.gender==='Male').length,
+        fem=students.filter(s=>s.gender==='Female').length,
+        schs=[...new Set(students.map(s=>s.schoolName).filter(Boolean))].length;
+  const recent=[...students].slice(-6).reverse();
+  $('ct').innerHTML=`
+    <div class="stats-grid">
+      <div class="scard"><div class="sc-top"><div class="sc-ico navy">👥</div></div><div class="sc-lbl">Total Students</div><div class="sc-val">${tot}</div><div class="sc-sub">All enrolled</div></div>
+      <div class="scard"><div class="sc-top"><div class="sc-ico navy">🧑</div></div><div class="sc-lbl">Male Students</div><div class="sc-val">${male}</div><div class="sc-sub">${tot?Math.round(male/tot*100):0}% of total</div></div>
+      <div class="scard"><div class="sc-top"><div class="sc-ico red">👩</div></div><div class="sc-lbl">Female Students</div><div class="sc-val">${fem}</div><div class="sc-sub">${tot?Math.round(fem/tot*100):0}% of total</div></div>
+      <div class="scard"><div class="sc-top"><div class="sc-ico green">🏫</div></div><div class="sc-lbl">Schools</div><div class="sc-val">${schs}</div><div class="sc-sub">Unique schools</div></div>
+    </div>
+    <div class="tc">
+      <div class="tc-head"><h2>Recently Added</h2><button class="btn btn-ghost btn-sm" onclick="gp('students',document.querySelector('[data-page=students]'))">View All →</button></div>
+      ${recent.length===0?`<div class="empty"><div class="ei">🎒</div><div class="et">No students yet</div><div class="es">Add your first student to get started</div></div>`:`
+      <table><thead><tr><th>Student</th><th>Class</th><th>School</th><th>Gender</th></tr></thead><tbody>
+      ${recent.map(s=>`<tr><td><div class="sc"><div class="sav" style="background:${avc(s.studentName)}">${ini(s.studentName)}</div><div><div class="sn">${s.studentName}</div><div class="sd">${fmt(s.dateOfBirth)}</div></div></div></td>
+      <td>${s.className?`<span class="badge b-cls">${s.className}</span>`:'—'}</td>
+      <td style="color:var(--text2)">${s.schoolName||'—'}</td>
+      <td>${s.gender?`<span class="badge b-${s.gender.toLowerCase()}">${s.gender}</span>`:'—'}</td></tr>`).join('')}
+      </tbody></table>`}
+    </div>`;
+}
+
+// ── Students ──────────────────────────────────────────────
+function rStudents(){
+  const schs=[...new Set(students.map(s=>s.schoolName).filter(Boolean))];
+  $('ct').innerHTML=`
+    <div class="tc">
+      <div class="tc-head"><h2>All Students</h2>
+        <div class="fr">
+          <select class="fsel" id="fg-c" onchange="applyF()"><option value="">All Classes</option>${CLS.map(c=>`<option>${c}</option>`).join('')}</select>
+          <select class="fsel" id="fg-g" onchange="applyF()"><option value="">All Genders</option><option>Male</option><option>Female</option><option>Other</option></select>
+          <select class="fsel" id="fg-s" onchange="applyF()"><option value="">All Schools</option>${schs.map(s=>`<option>${s}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div id="stu-tb"></div>
+      <div class="pag" id="pag"></div>
+    </div>`;
+  rTable();
+}
+
+function rTable(){
+  const start=(pg-1)*PZ,slice=filtered.slice(start,start+PZ);
+  const tb=$('stu-tb');if(!tb)return;
+  if(!filtered.length){tb.innerHTML=`<div class="empty"><div class="ei">🔍</div><div class="et">No students found</div><div class="es">Try a different search or filter</div></div>`;rPag();return;}
+  tb.innerHTML=`<table><thead><tr><th>Student</th><th>Class</th><th>School</th><th>Parent</th><th>Mobile</th><th>Actions</th></tr></thead><tbody>
+  ${slice.map(s=>`<tr>
+    <td><div class="sc"><div class="sav" style="background:${avc(s.studentName)}">${ini(s.studentName)}</div><div><div class="sn">${s.studentName}</div><div class="sd">${fmt(s.dateOfBirth)}</div></div></div></td>
+    <td>${s.className?`<span class="badge b-cls">${s.className}</span>`:'—'}</td>
+    <td style="color:var(--text2)">${s.schoolName||'—'}</td>
+    <td style="color:var(--text2)">${s.parentName||'—'}</td>
+    <td style="color:var(--text2);font-size:12px">${s.mobileNo||'—'}</td>
+    <td><div class="acts">
+      <button class="ib r" onclick="openRcpt('${s.id}','${s.studentName.replace(/'/g,"\\'")}');event.stopPropagation()" title="Receipt">🧾</button>
+      <button class="ib e" onclick="openEdit('${s.id}');event.stopPropagation()" title="Edit">✏</button>
+      <button class="ib d" onclick="openDel('${s.id}','${s.studentName.replace(/'/g,"\\'")}');event.stopPropagation()" title="Delete">🗑</button>
+    </div></td>
+  </tr>`).join('')}
+  </tbody></table>`;
+  rPag();
+}
+
+function rPag(){
+  const bar=$('pag');if(!bar)return;
+  const tot=filtered.length,pages=Math.ceil(tot/PZ),s=(pg-1)*PZ+1,e=Math.min(pg*PZ,tot);
+  bar.innerHTML=`<span class="pag-i">${tot===0?'No results':`${s}–${e} of ${tot} students`}</span>
+  <div class="pag-b">
+    <button class="pb" onclick="goP(${pg-1})" ${pg===1?'disabled':''}>‹</button>
+    ${Array.from({length:Math.min(pages,5)},(_,i)=>i+1).map(p=>`<button class="pb ${p===pg?'active':''}" onclick="goP(${p})">${p}</button>`).join('')}
+    <button class="pb" onclick="goP(${pg+1})" ${pg>=pages?'disabled':''}>›</button>
+  </div>`;
+}
+function goP(p){const pages=Math.ceil(filtered.length/PZ);if(p<1||p>pages)return;pg=p;rTable();}
+
+// ── By Class ──────────────────────────────────────────────
+function rByClass(sel){
+  sel=sel||CLS[0];
+  const cls=students.filter(s=>s.className===sel);
+  $('ct').innerHTML=`
+    <div class="ctabs">${CLS.map(c=>`<div class="ctab ${c===sel?'active':''}" onclick="rByClass('${c}')">${c} <span style="opacity:0.55;font-size:10px">(${students.filter(s=>s.className===c).length})</span></div>`).join('')}</div>
+    <div class="tc">
+      <div class="tc-head"><h2>${sel} Standard &nbsp;<span style="font-size:13px;font-weight:400;color:var(--text3)">${cls.length} student${cls.length!==1?'s':''}</span></h2>
+        <button class="btn btn-red btn-sm" onclick="openAdd()">+ Add Student</button></div>
+      ${cls.length===0?`<div class="empty"><div class="ei">📚</div><div class="et">No students in ${sel} standard</div><div class="es">Add students to this class</div></div>`:`
+      <table><thead><tr><th>Student</th><th>School</th><th>Gender</th><th>Parent</th><th>Mobile</th><th>Actions</th></tr></thead><tbody>
+      ${cls.map(s=>`<tr>
+        <td><div class="sc"><div class="sav" style="background:${avc(s.studentName)}">${ini(s.studentName)}</div><div><div class="sn">${s.studentName}</div><div class="sd">${fmt(s.dateOfBirth)}</div></div></div></td>
+        <td style="color:var(--text2)">${s.schoolName||'—'}</td>
+        <td>${s.gender?`<span class="badge b-${s.gender.toLowerCase()}">${s.gender}</span>`:'—'}</td>
+        <td style="color:var(--text2)">${s.parentName||'—'}</td>
+        <td style="color:var(--text2);font-size:12px">${s.mobileNo||'—'}</td>
+        <td><div class="acts">
+          <button class="ib r" onclick="openRcpt('${s.id}','${s.studentName.replace(/'/g,"\\'")}');event.stopPropagation()" title="Receipt">🧾</button>
+          <button class="ib e" onclick="openEdit('${s.id}');event.stopPropagation()" title="Edit">✏</button>
+          <button class="ib d" onclick="openDel('${s.id}','${s.studentName.replace(/'/g,"\\'")}');event.stopPropagation()" title="Delete">🗑</button>
+        </div></td>
+      </tr>`).join('')}
+      </tbody></table>`}
+    </div>`;
+}
+
+// ── All Receipts ──────────────────────────────────────────
+async function rReceipts(){
+  $('ct').innerHTML=`<div class="tc"><div class="tc-head"><h2>All Fee Receipts</h2></div><div id="all-rc"><div class="empty"><div class="ei">⏳</div><div class="et">Loading…</div></div></div></div>`;
+  try{
+    const all=[];
+    for(const s of students.slice(0,60)){const rs=await api(`/receipts/student/${s.id}`)||[];all.push(...rs);}
+    all.sort((a,b)=>new Date(b.paymentDate)-new Date(a.paymentDate));
+    const el=$('all-rc');
+    if(!all.length){el.innerHTML=`<div class="empty"><div class="ei">🧾</div><div class="et">No receipts yet</div><div class="es">Generate a fee receipt from the Students page</div></div>`;return;}
+    el.innerHTML=`<table><thead><tr><th>Rec. No.</th><th>Student</th><th>Class</th><th>Date</th><th>Amount Paid</th><th>Total Fees</th><th>Remaining</th></tr></thead><tbody>
+    ${all.map(r=>`<tr>
+      <td style="font-family:monospace;font-size:12px;color:var(--navy);font-weight:700">${r.receiptNumber}</td>
+      <td><div class="sc"><div class="sav" style="background:${avc(r.studentName)};width:26px;height:26px;font-size:9px">${ini(r.studentName)}</div>${r.studentName}</div></td>
+      <td>${r.className?`<span class="badge b-cls">${r.className}</span>`:'—'}</td>
+      <td style="color:var(--text2)">${fmt(r.paymentDate)}</td>
+      <td style="color:var(--green);font-weight:600">${fmtN(r.feeAmountPaid)}</td>
+      <td style="color:var(--text2)">${fmtN(r.totalFees)}</td>
+      <td style="color:var(--red)">${fmtN(r.remainingFees)}</td>
+    </tr>`).join('')}
+    </tbody></table>`;
+  }catch(e){toast('Failed to load receipts','error');}
+}
+
+// ── Settings ──────────────────────────────────────────────
+async function rSettings(){
+  $('ct').innerHTML=`
+    <div class="s-grid">
+      <div class="s-sec">
+        <h3>Create New Admin</h3>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6">Only existing admins can create new admin accounts. New admins will have full system access.</p>
+        <button class="btn btn-primary" onclick="ov('adm-m')">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Create New Admin
+        </button>
+      </div>
+      <div class="s-sec">
+        <h3>Current Admins</h3>
+        <div class="a-list" id="a-list">Loading…</div>
+      </div>
+    </div>`;
+  try{
+    const admins=await api('/auth/admin/list')||[];
+    $('a-list').innerHTML=admins.length===0?'<div style="font-size:13px;color:var(--text3)">No admins found</div>'
+      :admins.map(a=>`<div class="a-item"><div class="a-av">${ini(a)}</div><div class="a-name">${a}</div>${a===ME?.username?`<span class="badge b-rec">You</span>`:''}</div>`).join('');
+  }catch(e){$('a-list').innerHTML='<div style="font-size:13px;color:var(--red)">Failed to load</div>';}
+}
+
+async function createAdmin(){
+  const u=$('a-u').value.trim(),p=$('a-p').value,c=$('a-cp').value,e=$('a-e');
+  e.style.display='none';
+  if(!u||!p){e.textContent='Username and password required';e.style.display='block';return;}
+  if(p.length<6){e.textContent='Password must be at least 6 characters';e.style.display='block';return;}
+  if(p!==c){e.textContent='Passwords do not match';e.style.display='block';return;}
+  try{
+    await api('/auth/admin/create','POST',{username:u,password:p,role:'ADMIN'});
+    toast(`Admin "${u}" created`,'success');co('adm-m');
+    $('a-u').value='';$('a-p').value='';$('a-cp').value='';
+    if(curPg==='settings')rSettings();
+  }catch(err){e.textContent=err.message;e.style.display='block';}
+}
+
+// ── Add / Edit Student ────────────────────────────────────
+function openAdd(){
+  editId=null;$('sm-t').textContent='Add New Student';$('sm-sv').textContent='Save Student';
+  ['f-sn','f-dob','f-cls','f-gen','f-sch','f-par','f-ped','f-mob','f-aad','f-addr'].forEach(id=>{const el=$(id);if(el)el.value='';});
+  $('sm-e').style.display='none';ov('stu-m');
+}
+function openEdit(id){
+  const s=students.find(x=>x.id===id);if(!s)return;
+  editId=id;$('sm-t').textContent='Edit Student';$('sm-sv').textContent='Update Student';
+  $('f-sn').value=s.studentName||'';$('f-dob').value=s.dateOfBirth||'';
+  $('f-cls').value=s.className||'';$('f-gen').value=s.gender||'';
+  $('f-sch').value=s.schoolName||'';$('f-par').value=s.parentName||'';
+  $('f-ped').value=s.parentEducation||'';$('f-mob').value=s.mobileNo||'';
+  $('f-aad').value=s.aadharCard||'';$('f-addr').value=s.address||'';
+  $('sm-e').style.display='none';ov('stu-m');
+}
+async function saveStu(){
+  const name=$('f-sn').value.trim(),dob=$('f-dob').value,e=$('sm-e');
+  e.style.display='none';
+  if(!name){e.textContent='Student name is required';e.style.display='block';return;}
+  if(!dob){e.textContent='Date of birth is required';e.style.display='block';return;}
+  const payload={studentName:name,dateOfBirth:dob,className:$('f-cls').value,gender:$('f-gen').value,
+    schoolName:$('f-sch').value,parentName:$('f-par').value,parentEducation:$('f-ped').value,
+    mobileNo:$('f-mob').value,aadharCard:$('f-aad').value,address:$('f-addr').value};
+  try{
+    if(editId){await api(`/students/${editId}`,'PUT',payload);toast('Student updated','success');}
+    else{await api('/students','POST',payload);toast('Student added','success');}
+    co('stu-m');await loadStudents();
+  }catch(err){e.textContent=err.message;e.style.display='block';}
+}
+
+// ── Delete ────────────────────────────────────────────────
+function openDel(id,name){
+  $('del-msg').textContent=`Delete "${name}"? This cannot be undone.`;
+  $('del-btn').onclick=()=>doDel(id);ov('del-m');
+}
+async function doDel(id){
+  try{await api(`/students/${id}`,'DELETE');toast('Student deleted','success');co('del-m');await loadStudents();}
+  catch(e){toast(e.message,'error');co('del-m');}
+}
+
+// ── Receipt ───────────────────────────────────────────────
+async function openRcpt(id,name){
+  rcStuId=id;$('rc-t').textContent=`Fee Receipt — ${name}`;
+  $('rc-sn').value=name;
+  ['rc-af','rc-tf','rc-rf','rc-ap','rc-rm'].forEach(id=>{$(id).value='';});
+  $('rc-dt').value=new Date().toISOString().split('T')[0];
+  $('rc-fd').value='';
+  $('rc-e').style.display='none';
+  $('rc-form').style.display='block';$('rc-preview').style.display='none';$('ph-wrap').style.display='none';
+  $('rc-foot').innerHTML=`<button class="btn btn-ghost" onclick="co('rc-m')">Cancel</button><button class="btn btn-primary" onclick="createReceipt()">Generate Receipt</button>`;
+  ov('rc-m');
+  try{
+    const hist=await api(`/receipts/student/${id}`)||[];
+    if(hist.length>0){
+      $('ph-wrap').style.display='block';
+      $('ph-list').innerHTML=hist.map(r=>`<div class="ph-item"><div class="ph-num">${r.receiptNumber}</div><div class="ph-date">${fmt(r.paymentDate)}</div><div class="ph-amt">${fmtN(r.feeAmountPaid)}</div></div>`).join('');
+    }
+  }catch(e){}
+}
+
+async function createReceipt(){
+  const dt=$('rc-dt').value,e=$('rc-e');
+  e.style.display='none';
+  if(!dt){e.textContent='Payment date is required';e.style.display='block';return;}
+  const payload={
+    studentId:rcStuId,
+    admissionFees:$('rc-af').value?parseFloat($('rc-af').value):null,
+    totalFees:$('rc-tf').value?parseFloat($('rc-tf').value):null,
+    remainingFees:$('rc-rf').value?parseFloat($('rc-rf').value):null,
+    feeAmountPaid:$('rc-ap').value?parseFloat($('rc-ap').value):null,
+    paymentDate:dt,
+    totalFeesDatedOn:$('rc-fd').value||null,
+    remarks:$('rc-rm').value||null
+  };
+  try{
+    const r=await api('/receipts','POST',payload);
+    const stu=students.find(s=>s.id===rcStuId)||{};
+    // Populate preview exactly matching physical receipt
+    $('pr-rn').textContent=r.receiptNumber;
+    $('pr-dt').textContent=fmt(r.paymentDate);
+    $('pr-mob').textContent=r.mobileNo||'—';
+    $('pr-sn').textContent=r.studentName||'—';
+    $('pr-pn').textContent=r.parentName||'—';
+    $('pr-std').textContent=r.className||'—';
+    $('pr-sch').textContent=r.schoolName||'—';
+    $('pr-addr').textContent=r.address||stu.address||'—';
+    $('pr-af').textContent=fmtN(r.admissionFees);
+    $('pr-tf').textContent=fmtN(r.totalFees);
+    $('pr-rf').textContent=fmtN(r.remainingFees);
+    $('pr-fd').textContent=r.totalFeesDatedOn?fmt(r.totalFeesDatedOn):'—';
+    $('rc-form').style.display='none';$('rc-preview').style.display='block';
+    $('rc-foot').innerHTML=`<button class="btn btn-ghost" onclick="co('rc-m')">Close</button><button class="btn btn-green" onclick="dlPDF('${r.receiptNumber}')">⬇ Download PDF</button>`;
+    toast('Receipt '+r.receiptNumber+' generated','success');
+  }catch(err){e.textContent=err.message;e.style.display='block';}
+}
+
+function dlPDF(recNum){
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a5',orientation:'landscape'});
+  const W=210,M=8;
+  // Outer border
+  doc.setDrawColor(30,30,30);doc.setLineWidth(1);doc.rect(M,M,W-M*2,140,);
+  doc.setLineWidth(0.4);doc.rect(M+2,M+2,W-M*2-4,136);
+  // Header area
+  doc.setFillColor(255,255,255);
+  // Tagline
+  doc.setFont('helvetica','italic');doc.setFontSize(7.5);doc.setTextColor(90,85,80);
+  doc.text('Welcome For Our New Visions With High Goals...',M+4,M+8);
+  // Institute name
+  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(26,37,69);
+  doc.text('BRAMHAA COACHING CLASSES',M+4,M+17);
+  // Address
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(80,76,70);
+  doc.text('4th Floor, Chatrapati Capital, Chakan-Shikrapur Road, opp. Shantanu hotel, Chakan, Khed, Pune - 410 501',M+4,M+22);
+  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
+  doc.text('Contact : 8637727547',W/2,M+27,{align:'center'});
+  // Rec No box (top right)
+  const rn=$('pr-rn').textContent,dt=$('pr-dt').textContent;
+  doc.setDrawColor(50,50,50);doc.setLineWidth(0.5);
+  doc.rect(W-M-36,M+2,34,12);
+  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
+  doc.text('Rec. No.',W-M-34,M+8);
+  doc.setFontSize(11);doc.text(rn.replace(/BCC-\d+-/,''),W-M-16,M+8);
+  doc.rect(W-M-36,M+14,34,9);
+  doc.setFontSize(7.5);doc.text('Date : '+dt,W-M-34,M+20);
+  // Divider
+  doc.setDrawColor(50,50,50);doc.setLineWidth(0.5);
+  doc.line(M,M+30,W-M,M+30);
+  // RECEIPT black bar
+  doc.setFillColor(60,60,60);doc.rect(W/2-18,M+31,36,7,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(255,255,255);
+  doc.text('RECEIPT',W/2,M+36,{align:'center'});
+  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
+  doc.text('Mob.No.: '+$('pr-mob').textContent,W-M-5,M+36,{align:'right'});
+  doc.line(M,M+38,W-M,M+38);
+  // Body rows
+  doc.setTextColor(30,30,25);
+  const row=(label,val,x,y,w)=>{
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(label,x,y);
+    doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+    doc.text(String(val),x+w,y);
+    doc.setDrawColor(100,100,100);doc.setLineWidth(0.3);
+    doc.line(x+w,y+0.5,x+w+55,y+0.5);
+  };
+  let y=M+45;
+  row('Student Name :  ',$('pr-sn').textContent,M+4,y,28);y+=8;
+  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Parents Name :  ',M+4,y);
+  doc.setFont('helvetica','normal');doc.text($('pr-pn').textContent,M+32,y);
+  doc.line(M+32,y+0.5,M+95,y+0.5);
+  doc.setFont('helvetica','bold');doc.text('Std.:  ',M+100,y);
+  doc.setFont('helvetica','normal');doc.text($('pr-std').textContent,M+112,y);
+  doc.line(M+112,y+0.5,W-M-5,y+0.5);
+  y+=8;
+  row('School Name  ',$('pr-sch').textContent,M+4,y,28);y+=8;
+  // Address + For Bramhaa
+  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Add.:  ',M+4,y);
+  doc.setFont('helvetica','normal');doc.text($('pr-addr').textContent,M+15,y);
+  doc.line(M+15,y+0.5,M+82,y+0.5);
+  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('For Bramhaa Coaching Classes',M+86,y);
+  y+=8;
+  // Fee rows
+  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Admission Fees :  ',M+4,y);
+  doc.setFont('helvetica','normal');doc.text($('pr-af').textContent,M+38,y);
+  doc.line(M+38,y+0.5,M+82,y+0.5);
+  doc.setFont('helvetica','bold');doc.text('Total Fees :  ',M+86,y);
+  doc.setFont('helvetica','normal');doc.text($('pr-tf').textContent,M+110,y);
+  doc.line(M+110,y+0.5,W-M-5,y+0.5);
+  y+=8;
+  row('Remaining Fees :  ',$('pr-rf').textContent,M+4,y,35);y+=8;
+  row('Total Fees Dated on :  ',$('pr-fd').textContent,M+4,y,42);y+=8;
+  // NOTE
+  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(40,40,40);
+  doc.text('NOTE : Fees Once Paid will not be Refunded.',W/2,y+2,{align:'center'});
+  y+=9;
+  doc.setDrawColor(80,80,80);doc.setLineWidth(0.4);doc.line(M+4,y,W-M-4,y);
+  // Footer
+  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(30,30,25);
+  doc.text("Parent's / Student's Sign",M+4,y+8);
+  doc.text('For : Bramhaa Coaching Class',W-M-5,y+8,{align:'right'});
+  doc.save(recNum+'.pdf');
+  toast('PDF downloaded','success');
+}
+
+// ── Search & Filter ───────────────────────────────────────
+function handleSearch(q){applyF(q);}
+function applyF(sq){
+  const q=(sq!==undefined?sq:$('s-in').value).toLowerCase();
+  const gc=$('fg-c'),gg=$('fg-g'),gs=$('fg-s');
+  const cls=gc?gc.value:'',gdr=gg?gg.value:'',sch=gs?gs.value:'';
+  filtered=students.filter(s=>{
+    const mq=!q||s.studentName.toLowerCase().includes(q)||(s.schoolName||'').toLowerCase().includes(q)||(s.parentName||'').toLowerCase().includes(q);
+    return mq&&(!cls||s.className===cls)&&(!gdr||s.gender===gdr)&&(!sch||s.schoolName===sch);
+  });
+  pg=1;rTable();
+}
+
+// ── Toast ─────────────────────────────────────────────────
+function toast(msg,type='info'){
+  const c=$('tw'),t=document.createElement('div');
+  t.className=`toast ${type}`;
+  t.innerHTML=`<div class="td"></div><span style="color:var(--text);font-size:13px;flex:1">${msg}</span>`;
+  c.appendChild(t);setTimeout(()=>t.remove(),3500);
+}
+
+// Close overlay on bg click
+document.querySelectorAll('.overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)co(o.id);});});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login-pg').classList.contains('show'))doLogin();});
+
+if(TOKEN&&ME){$('login-pg').classList.remove('show');$('app').style.display='flex';boot();}
+</script>
+</body>
+</html>
