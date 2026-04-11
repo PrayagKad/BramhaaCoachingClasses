@@ -16,6 +16,15 @@ public class StudentResponseDTO {
     private String schoolName;
     private String aadharCard;
     private String className;
+    private String photoUrl;
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }

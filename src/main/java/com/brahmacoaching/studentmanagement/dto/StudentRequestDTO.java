@@ -26,6 +26,9 @@ public class StudentRequestDTO {
 
     @Pattern(regexp = "^\\d{12}$", message = "Aadhar card must be exactly 12 digits")
     private String aadharCard;
+    // ✅ NEW: Photo URL (will be set after upload)
+    private String photoUrl;
+
 
     // "1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th","11th","12th"
     private String className;
@@ -108,5 +111,13 @@ public class StudentRequestDTO {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -35,9 +37,15 @@ public class Student {
     @Column(name = "aadhar_card", length = 20)
     private String aadharCard;
 
+
+
     // e.g. "1st", "2nd", ... "10th", "11th", "12th"
     @Column(name = "class_name", length = 10)
     private String className;
+
+    // ✅ NEW: Photo URL field
+    @Column(name = "photo_url", length = 500)
+    private String photoUrl;
 
     public UUID getId() {
         return id;
@@ -125,5 +133,13 @@ public class Student {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

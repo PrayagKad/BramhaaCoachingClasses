@@ -5,7 +5,9 @@ import com.brahmacoaching.studentmanagement.dto.StudentResponseDTO;
 import com.brahmacoaching.studentmanagement.exception.StudentNotFoundException;
 import com.brahmacoaching.studentmanagement.mapper.StudentMapper;
 import com.brahmacoaching.studentmanagement.model.Student;
+import com.brahmacoaching.studentmanagement.repository.FeeReceiptRepository;
 import com.brahmacoaching.studentmanagement.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    private final FeeReceiptRepository feeReceiptRepository;
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
 
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentServiceImpl(FeeReceiptRepository feeReceiptRepository, StudentRepository studentRepository, StudentMapper studentMapper) {
+        this.feeReceiptRepository = feeReceiptRepository;
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
     }
@@ -59,11 +63,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public void deleteStudent(UUID id) {
         if (!studentRepository.existsById(id))
-            throw new StudentNotFoundException("Student not found with id: " + id);
+            throw new StudentNotFoundException("Student not found: " + id);
+
+        // ✅ Delete all receipts for this student first
+        feeReceiptRepository.deleteByStudentId(id);
+
+        // Then delete the student
         studentRepository.deleteById(id);
     }
+
 
     @Override
     public List<StudentResponseDTO> searchStudents(String name, String school,

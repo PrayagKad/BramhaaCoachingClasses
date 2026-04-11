@@ -1,219 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Bramhaa Coaching Classes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f4f3ee;--bg2:#eae8e0;--card:#fff;--card2:#fafaf7;
-  --border:#dddbd2;--border2:#bfbcb0;
-  --text:#18180f;--text2:#65625a;--text3:#9e9b8e;
-  --navy:#1a2545;--navy2:#0f1830;--navy3:#253268;
-  --red:#c0392b;--red2:#e74c3c;
-  --green:#1a6b3c;--green-bg:#e8f5ee;
-  --amber:#b8620a;--amber-bg:#fef3e2;
-  --blue:#1d5fa0;--blue-bg:#e8f0fa;
-  --sidebar:248px;
-  --font-display:'Playfair Display',serif;
-  --font-body:'Outfit',sans-serif;
-  --radius:10px;--radius-lg:16px;
-  --shadow:0 1px 4px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.05);
-  --shadow-lg:0 8px 40px rgba(0,0,0,0.13);
-}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6}
-.app{display:flex;height:100vh;overflow:hidden}
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bramhaa Coaching Classes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#f4f3ee;--bg2:#eae8e0;--card:#fff;--card2:#fafaf7;
+      --border:#dddbd2;--border2:#bfbcb0;
+      --text:#18180f;--text2:#65625a;--text3:#9e9b8e;
+      --navy:#1a2545;--navy2:#0f1830;--navy3:#253268;
+      --red:#c0392b;--red2:#e74c3c;
+      --green:#1a6b3c;--green-bg:#e8f5ee;
+      --amber:#b8620a;--amber-bg:#fef3e2;
+      --blue:#1d5fa0;--blue-bg:#e8f0fa;
+      --sidebar:248px;
+      --font-display:'Playfair Display',serif;
+      --font-body:'Outfit',sans-serif;
+      --radius:10px;--radius-lg:16px;
+      --shadow:0 1px 4px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.05);
+      --shadow-lg:0 8px 40px rgba(0,0,0,0.13);
+    }
+    html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6}
+    .app{display:flex;height:100vh;overflow:hidden}
 
-/* ── Sidebar ── */
-.sidebar{width:var(--sidebar);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0}
-.sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px}
-.bcc-logo-svg{flex-shrink:0}
-.sb-brand{line-height:1.2}
-.sb-brand-main{font-family:var(--font-display);font-size:14px;color:#fff;font-weight:700;letter-spacing:-0.2px}
-.sb-brand-sub{font-size:10px;color:rgba(255,255,255,0.38);text-transform:uppercase;letter-spacing:1px;font-weight:300;margin-top:1px}
-.nav{flex:1;padding:14px 10px;overflow-y:auto}
-.nav-sec{margin-bottom:22px}
-.nav-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.28);padding:0 10px;margin-bottom:5px;font-weight:500}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:13.5px;transition:all 0.14s}
-.nav-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.88)}
-.nav-item.active{background:var(--red);color:#fff}
-.nav-icon{width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.nav-badge{margin-left:auto;background:rgba(255,255,255,0.13);color:rgba(255,255,255,0.75);font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px}
-.nav-item.active .nav-badge{background:rgba(255,255,255,0.25)}
-.sb-foot{padding:14px;border-top:1px solid rgba(255,255,255,0.07)}
-.u-pill{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background 0.14s}
-.u-pill:hover{background:rgba(255,255,255,0.06)}
-.av{width:30px;height:30px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
-.u-name{font-size:13px;font-weight:500;color:#fff}
-.u-role{font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.5px}
+    /* ── Sidebar ── */
+    .sidebar{width:var(--sidebar);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0}
+    .sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px}
+    .bcc-logo-svg{flex-shrink:0}
+    .sb-brand{line-height:1.2}
+    .sb-brand-main{font-family:var(--font-display);font-size:14px;color:#fff;font-weight:700;letter-spacing:-0.2px}
+    .sb-brand-sub{font-size:10px;color:rgba(255,255,255,0.38);text-transform:uppercase;letter-spacing:1px;font-weight:300;margin-top:1px}
+    .nav{flex:1;padding:14px 10px;overflow-y:auto}
+    .nav-sec{margin-bottom:22px}
+    .nav-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.28);padding:0 10px;margin-bottom:5px;font-weight:500}
+    .nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:13.5px;transition:all 0.14s}
+    .nav-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.88)}
+    .nav-item.active{background:var(--red);color:#fff}
+    .nav-icon{width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .nav-badge{margin-left:auto;background:rgba(255,255,255,0.13);color:rgba(255,255,255,0.75);font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px}
+    .nav-item.active .nav-badge{background:rgba(255,255,255,0.25)}
+    .sb-foot{padding:14px;border-top:1px solid rgba(255,255,255,0.07)}
+    .u-pill{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background 0.14s}
+    .u-pill:hover{background:rgba(255,255,255,0.06)}
+    .av{width:30px;height:30px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+    .u-name{font-size:13px;font-weight:500;color:#fff}
+    .u-role{font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.5px}
 
-/* ── Main ── */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{height:58px;border-bottom:1px solid var(--border);background:var(--card);display:flex;align-items:center;padding:0 26px;gap:12px;flex-shrink:0}
-.tb-title{font-family:var(--font-display);font-size:18px;font-weight:700;flex:1;color:var(--text)}
-.search-w{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px;width:230px;transition:border-color 0.14s}
-.search-w:focus-within{border-color:var(--navy)}
-.search-w input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:13px;width:100%}
-.search-w input::placeholder{color:var(--text3)}
-.content{flex:1;overflow-y:auto;padding:26px}
+    /* ── Main ── */
+    .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .topbar{height:58px;border-bottom:1px solid var(--border);background:var(--card);display:flex;align-items:center;padding:0 26px;gap:12px;flex-shrink:0}
+    .tb-title{font-family:var(--font-display);font-size:18px;font-weight:700;flex:1;color:var(--text)}
+    .search-w{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px;width:230px;transition:border-color 0.14s}
+    .search-w:focus-within{border-color:var(--navy)}
+    .search-w input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:13px;width:100%}
+    .search-w input::placeholder{color:var(--text3)}
+    .content{flex:1;overflow-y:auto;padding:26px}
 
-/* ── Buttons ── */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all 0.14s}
-.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy2);transform:translateY(-1px)}
-.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a93226}
-.btn-ghost{background:var(--card);color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg2)}
-.btn-danger{background:#fdecea;color:var(--red);border:1px solid rgba(192,57,43,0.2)}.btn-danger:hover{background:#fbd5d1}
-.btn-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(26,107,60,0.2)}.btn-green:hover{background:#d0ecdb}
-.btn-sm{padding:5px 11px;font-size:12px}
+    /* ── Buttons ── */
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all 0.14s}
+    .btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy2);transform:translateY(-1px)}
+    .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a93226}
+    .btn-ghost{background:var(--card);color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg2)}
+    .btn-danger{background:#fdecea;color:var(--red);border:1px solid rgba(192,57,43,0.2)}.btn-danger:hover{background:#fbd5d1}
+    .btn-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(26,107,60,0.2)}.btn-green:hover{background:#d0ecdb}
+    .btn-sm{padding:5px 11px;font-size:12px}
 
-/* ── Stats ── */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.scard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow);transition:transform 0.14s,box-shadow 0.14s}
-.scard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
-.sc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
-.sc-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px}
-.sc-ico.navy{background:#e8eaf5}.sc-ico.red{background:#fdecea}.sc-ico.green{background:var(--green-bg)}.sc-ico.amber{background:var(--amber-bg)}
-.sc-lbl{font-size:12px;color:var(--text3);margin-bottom:3px}.sc-val{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--text);line-height:1}.sc-sub{font-size:11px;color:var(--text3);margin-top:5px}
+    /* ── Stats ── */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+    .scard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow);transition:transform 0.14s,box-shadow 0.14s}
+    .scard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+    .sc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+    .sc-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px}
+    .sc-ico.navy{background:#e8eaf5}.sc-ico.red{background:#fdecea}.sc-ico.green{background:var(--green-bg)}.sc-ico.amber{background:var(--amber-bg)}
+    .sc-lbl{font-size:12px;color:var(--text3);margin-bottom:3px}.sc-val{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--text);line-height:1}.sc-sub{font-size:11px;color:var(--text3);margin-top:5px}
 
-/* ── Table card ── */
-.tc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px}
-.tc-head{padding:15px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:var(--card2)}
-.tc-head h2{font-family:var(--font-display);font-size:15px;font-weight:700;flex:1}
-.fr{display:flex;gap:7px}
-.fsel{background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text2);padding:6px 10px;font-family:var(--font-body);font-size:12px;outline:none;cursor:pointer;transition:border-color 0.14s}
-.fsel:focus{border-color:var(--navy);color:var(--text)}
-table{width:100%;border-collapse:collapse}
-thead th{padding:9px 15px;text-align:left;font-size:10.5px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;background:var(--bg2);border-bottom:1px solid var(--border)}
-tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;cursor:pointer}
-tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:var(--bg)}
-td{padding:11px 15px;font-size:13px;vertical-align:middle}
-.sc{display:flex;align-items:center;gap:9px}
-.sav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
-.sn{font-weight:500}.sd{font-size:11px;color:var(--text3)}
-.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500}
-.b-male{background:var(--blue-bg);color:var(--blue)}.b-female{background:#fce4ec;color:#b0125e}.b-other{background:var(--amber-bg);color:var(--amber)}
-.b-cls{background:var(--bg2);color:var(--text2);border:1px solid var(--border)}
-.b-rec{background:#e8eaf5;color:var(--navy3);border:1px solid #c5cadf}
-.acts{display:flex;gap:5px}
-.ib{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all 0.14s;font-size:12px}
-.ib:hover.e{background:var(--blue-bg);border-color:rgba(29,95,160,0.3);color:var(--blue)}
-.ib:hover.d{background:#fdecea;border-color:rgba(192,57,43,0.3);color:var(--red)}
-.ib:hover.r{background:var(--green-bg);border-color:rgba(26,107,60,0.3);color:var(--green)}
+    /* ── Table card ── */
+    .tc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px}
+    .tc-head{padding:15px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:var(--card2)}
+    .tc-head h2{font-family:var(--font-display);font-size:15px;font-weight:700;flex:1}
+    .fr{display:flex;gap:7px}
+    .fsel{background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text2);padding:6px 10px;font-family:var(--font-body);font-size:12px;outline:none;cursor:pointer;transition:border-color 0.14s}
+    .fsel:focus{border-color:var(--navy);color:var(--text)}
+    table{width:100%;border-collapse:collapse}
+    thead th{padding:9px 15px;text-align:left;font-size:10.5px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;background:var(--bg2);border-bottom:1px solid var(--border)}
+    tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;cursor:pointer}
+    tbody tr:last-child{border-bottom:none}
+    tbody tr:hover{background:var(--bg)}
+    td{padding:11px 15px;font-size:13px;vertical-align:middle}
+    .sc{display:flex;align-items:center;gap:9px}
+    .sav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+    .sn{font-weight:500}.sd{font-size:11px;color:var(--text3)}
+    .badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500}
+    .b-male{background:var(--blue-bg);color:var(--blue)}.b-female{background:#fce4ec;color:#b0125e}.b-other{background:var(--amber-bg);color:var(--amber)}
+    .b-cls{background:var(--bg2);color:var(--text2);border:1px solid var(--border)}
+    .b-rec{background:#e8eaf5;color:var(--navy3);border:1px solid #c5cadf}
+    .acts{display:flex;gap:5px}
+    .ib{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all 0.14s;font-size:12px}
+    .ib:hover.e{background:var(--blue-bg);border-color:rgba(29,95,160,0.3);color:var(--blue)}
+    .ib:hover.d{background:#fdecea;border-color:rgba(192,57,43,0.3);color:var(--red)}
+    .ib:hover.r{background:var(--green-bg);border-color:rgba(26,107,60,0.3);color:var(--green)}
 
-/* ── Pagination ── */
-.pag{padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
-.pag-i{font-size:12px;color:var(--text3)}
-.pag-b{display:flex;gap:4px}
-.pb{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:12px;color:var(--text2);display:flex;align-items:center;justify-content:center;transition:all 0.14s;font-family:var(--font-body)}
-.pb:hover{background:var(--bg2)}.pb.active{background:var(--navy);color:#fff;border-color:var(--navy)}.pb:disabled{opacity:0.35;cursor:default}
+    /* ── Pagination ── */
+    .pag{padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+    .pag-i{font-size:12px;color:var(--text3)}
+    .pag-b{display:flex;gap:4px}
+    .pb{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:12px;color:var(--text2);display:flex;align-items:center;justify-content:center;transition:all 0.14s;font-family:var(--font-body)}
+    .pb:hover{background:var(--bg2)}.pb.active{background:var(--navy);color:#fff;border-color:var(--navy)}.pb:disabled{opacity:0.35;cursor:default}
 
-/* ── Overlay / Modal ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.42);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
-.overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--card);border-radius:20px;width:580px;max-height:92vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform 0.22s;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
-.overlay.open .modal{transform:translateY(0) scale(1)}
-.mh{padding:20px 22px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.mh h2{font-family:var(--font-display);font-size:17px;font-weight:700;flex:1}
-.mx{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:15px;transition:all 0.14s}
-.mx:hover{background:var(--bg2)}
-.mb{padding:20px 22px}
-.fg2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fg.full{grid-column:span 2}
-.fl{font-size:12px;color:var(--text2);font-weight:500}
-.fi,.fs{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;transition:border-color 0.14s;width:100%}
-.fi:focus,.fs:focus{border-color:var(--navy)}
-.fi::placeholder{color:var(--text3)}
-.mf{padding:15px 22px;border-top:1px solid var(--border);display:flex;gap:9px;justify-content:flex-end}
-.ferr{color:var(--red);font-size:12px;margin-top:8px;display:none}
+    /* ── Photo Upload ── */
+    .photo-box{text-align:center;margin-bottom:18px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+    .photo-prev{width:110px;height:110px;border-radius:12px;object-fit:contain;margin:0 auto 10px;display:block;border:3px solid var(--navy);background:var(--card2);padding:4px}
+    .photo-prev.empty{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:700;color:#fff;padding:0}
+    .photo-up-inp{display:none}
+    .photo-up-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;background:var(--navy);color:#fff;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.14s;border:none}
+    .photo-up-btn:hover{background:var(--navy2);transform:translateY(-1px)}
+    .sphoto{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0}
+    .sphoto.ph{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
 
-/* ── Confirm modal ── */
-.conf-m{background:var(--card);border-radius:20px;width:350px;padding:30px;text-align:center;box-shadow:var(--shadow-lg);border:1px solid var(--border);transform:translateY(14px) scale(0.98);transition:transform 0.22s}
-.overlay.open .conf-m{transform:translateY(0) scale(1)}
-.ci{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 14px}
-.ci.r{background:#fdecea}.ct{font-family:var(--font-display);font-size:17px;font-weight:700;margin-bottom:7px}
-.cs{font-size:13px;color:var(--text2);margin-bottom:22px;line-height:1.6}
-.cb{display:flex;gap:9px;justify-content:center}
+    /* ── Overlay / Modal ── */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.42);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
+    .overlay.open{opacity:1;pointer-events:all}
+    .modal{background:var(--card);border-radius:20px;width:580px;max-height:92vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform 0.22s;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+    .overlay.open .modal{transform:translateY(0) scale(1)}
+    .mh{padding:20px 22px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+    .mh h2{font-family:var(--font-display);font-size:17px;font-weight:700;flex:1}
+    .mx{width:27px;height:27px;border-radius:6px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:15px;transition:all 0.14s}
+    .mx:hover{background:var(--bg2)}
+    .mb{padding:20px 22px}
+    .fg2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .fg{display:flex;flex-direction:column;gap:5px}
+    .fg.full{grid-column:span 2}
+    .fl{font-size:12px;color:var(--text2);font-weight:500}
+    .fi,.fs{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;color:var(--text);outline:none;transition:border-color 0.14s;width:100%}
+    .fi:focus,.fs:focus{border-color:var(--navy)}
+    .fi::placeholder{color:var(--text3)}
+    .mf{padding:15px 22px;border-top:1px solid var(--border);display:flex;gap:9px;justify-content:flex-end}
+    .ferr{color:var(--red);font-size:12px;margin-top:8px;display:none}
 
-/* ── Receipt modal ── */
-.rcpt-m{background:var(--card);border-radius:20px;width:660px;max-height:93vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform 0.22s;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
-.overlay.open .rcpt-m{transform:translateY(0) scale(1)}
+    /* ── Confirm modal ── */
+    .conf-m{background:var(--card);border-radius:20px;width:350px;padding:30px;text-align:center;box-shadow:var(--shadow-lg);border:1px solid var(--border);transform:translateY(14px) scale(0.98);transition:transform 0.22s}
+    .overlay.open .conf-m{transform:translateY(0) scale(1)}
+    .ci{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 14px}
+    .ci.r{background:#fdecea}.ct{font-family:var(--font-display);font-size:17px;font-weight:700;margin-bottom:7px}
+    .cs{font-size:13px;color:var(--text2);margin-bottom:22px;line-height:1.6}
+    .cb{display:flex;gap:9px;justify-content:center}
 
-/* ── RECEIPT PREVIEW — matches actual Bramhaa receipt ── */
-.rp{background:#fff;border:2px solid #333;font-family:'Arial',sans-serif;padding:0;overflow:hidden}
-.rp-top{padding:10px 14px 8px;border-bottom:2px solid #333;display:flex;gap:0}
-.rp-header{flex:1}
-.rp-tagline{font-size:10px;color:#555;margin-bottom:2px;font-style:italic}
-.rp-name{font-size:22px;font-weight:900;color:#1a2545;text-transform:uppercase;letter-spacing:-0.5px;line-height:1.1}
-.rp-addr{font-size:9px;color:#555;margin-top:3px}
-.rp-contact{font-size:10px;color:#333;margin-top:2px;font-weight:500}
-.rp-recno{border-left:2px solid #333;padding:6px 10px;display:flex;flex-direction:column;gap:8px;min-width:130px}
-.rp-recno-row{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;border:1px solid #333;padding:4px 7px}
-.rp-recno-label{white-space:nowrap}
-.rp-recno-val{font-size:14px;font-weight:900;letter-spacing:1px}
-.rp-subhead{background:#333;color:#fff;text-align:center;font-size:12px;font-weight:700;padding:4px;letter-spacing:2px;border-bottom:2px solid #333;display:flex;align-items:center;justify-content:center;gap:16px}
-.rp-mob-row{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#fff}
-.rp-body{padding:10px 14px}
-.rp-line{display:flex;align-items:flex-end;gap:0;margin-bottom:9px}
-.rp-lbl{font-size:12px;font-weight:700;color:#222;white-space:nowrap;min-width:110px}
-.rp-val{flex:1;border-bottom:1.5px solid #555;font-size:12px;padding:0 6px 1px;min-height:20px;color:#111}
-.rp-inline{display:flex;gap:14px;margin-bottom:9px}
-.rp-note{text-align:center;font-size:11px;font-weight:700;color:#333;margin:10px 0 6px;letter-spacing:0.3px}
-.rp-footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:8px;margin-top:6px;border-top:1.5px solid #333}
-.rp-sign{font-size:11px;font-weight:700;color:#333}
-.rp-forbcc{font-size:11px;font-weight:700;color:#333;text-align:right}
+    /* ── Receipt modal ── */
+    .rcpt-m{background:var(--card);border-radius:20px;width:660px;max-height:93vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform 0.22s;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+    .overlay.open .rcpt-m{transform:translateY(0) scale(1)}
 
-/* ── Payment history ── */
-.ph-item{display:flex;align-items:center;gap:12px;padding:11px 15px;border-bottom:1px solid var(--border)}
-.ph-item:last-child{border-bottom:none}
-.ph-num{font-size:11px;font-weight:600;color:var(--navy);font-family:monospace;min-width:130px}
-.ph-date{font-size:12px;color:var(--text2);flex:1}
-.ph-amt{font-size:13px;font-weight:600;color:var(--green)}
+    /* ── RECEIPT PREVIEW — matches actual Bramhaa receipt ── */
+    .rp{background:#fff;border:2px solid #333;font-family:'Arial',sans-serif;padding:0;overflow:hidden}
+    .rp-top{padding:10px 14px 8px;border-bottom:2px solid #333;display:flex;gap:0}
+    .rp-header{flex:1}
+    .rp-tagline{font-size:10px;color:#555;margin-bottom:2px;font-style:italic}
+    .rp-name{font-size:22px;font-weight:900;color:#1a2545;text-transform:uppercase;letter-spacing:-0.5px;line-height:1.1}
+    .rp-addr{font-size:9px;color:#555;margin-top:3px}
+    .rp-contact{font-size:10px;color:#333;margin-top:2px;font-weight:500}
+    .rp-recno{border-left:2px solid #333;padding:6px 10px;display:flex;flex-direction:column;gap:8px;min-width:130px}
+    .rp-recno-row{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;border:1px solid #333;padding:4px 7px}
+    .rp-recno-label{white-space:nowrap}
+    .rp-recno-val{font-size:14px;font-weight:900;letter-spacing:1px}
+    .rp-subhead{background:#333;color:#fff;text-align:center;font-size:12px;font-weight:700;padding:4px;letter-spacing:2px;border-bottom:2px solid #333;display:flex;align-items:center;justify-content:center;gap:16px}
+    .rp-mob-row{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#fff}
+    .rp-body{padding:10px 14px}
+    .rp-line{display:flex;align-items:flex-end;gap:0;margin-bottom:9px}
+    .rp-lbl{font-size:12px;font-weight:700;color:#222;white-space:nowrap;min-width:110px}
+    .rp-val{flex:1;border-bottom:1.5px solid #555;font-size:12px;padding:0 6px 1px;min-height:20px;color:#111}
+    .rp-inline{display:flex;gap:14px;margin-bottom:9px}
+    .rp-note{text-align:center;font-size:11px;font-weight:700;color:#333;margin:10px 0 6px;letter-spacing:0.3px}
+    .rp-footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:8px;margin-top:6px;border-top:1.5px solid #333}
+    .rp-sign{font-size:11px;font-weight:700;color:#333}
+    .rp-forbcc{font-size:11px;font-weight:700;color:#333;text-align:right}
 
-/* ── Class tabs ── */
-.ctabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
-.ctab{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text2);transition:all 0.14s}
-.ctab:hover{background:var(--bg2)}.ctab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    /* ── Payment history ── */
+    .ph-item{display:flex;align-items:center;gap:12px;padding:11px 15px;border-bottom:1px solid var(--border)}
+    .ph-item:last-child{border-bottom:none}
+    .ph-num{font-size:11px;font-weight:600;color:var(--navy);font-family:monospace;min-width:130px}
+    .ph-date{font-size:12px;color:var(--text2);flex:1}
+    .ph-amt{font-size:13px;font-weight:600;color:var(--green)}
 
-/* ── Settings ── */
-.s-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.s-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow)}
-.s-sec h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:14px}
-.a-list{display:flex;flex-direction:column;gap:8px}
-.a-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border-radius:8px;border:1px solid var(--border)}
-.a-av{width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
-.a-name{font-size:13px;font-weight:500;flex:1}
+    /* ── Class tabs ── */
+    .ctabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+    .ctab{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text2);transition:all 0.14s}
+    .ctab:hover{background:var(--bg2)}.ctab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
 
-/* ── Login ── */
-.login-pg{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:300}
-.login-pg.show{display:flex}
-.login-card{background:var(--card);border:1px solid var(--border);border-radius:24px;width:400px;box-shadow:var(--shadow-lg);overflow:hidden}
-.login-top{background:var(--navy);padding:0}
-.login-banner{padding:30px 28px 22px;display:flex;align-items:center;gap:16px}
-.login-info{flex:1}
-.login-ttl{font-family:var(--font-display);font-size:20px;color:#fff;font-weight:700;line-height:1.2}
-.login-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.8px;font-weight:300}
-.login-body{padding:24px 28px 28px}
+    /* ── Settings ── */
+    .s-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .s-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow)}
+    .s-sec h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:14px}
+    .a-list{display:flex;flex-direction:column;gap:8px}
+    .a-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border-radius:8px;border:1px solid var(--border)}
+    .a-av{width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+    .a-name{font-size:13px;font-weight:500;flex:1}
 
-/* ── Empty ── */
-.empty{padding:55px 20px;text-align:center}
-.ei{font-size:38px;margin-bottom:10px}.et{font-size:14px;font-weight:600;color:var(--text2);margin-bottom:5px}.es{font-size:12px;color:var(--text3)}
+    /* ── Student Detail Modal ── */
+    .detail-m{background:var(--card);border-radius:20px;width:520px;max-height:92vh;overflow-y:auto;transform:translateY(14px) scale(0.98);transition:transform 0.22s;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+    .overlay.open .detail-m{transform:translateY(0) scale(1)}
+    .det-photo-box{text-align:center;padding:20px;background:var(--bg);border-bottom:1px solid var(--border)}
+    .det-photo{width:120px;height:120px;border-radius:12px;object-fit:cover;margin:0 auto;display:block;border:3px solid var(--navy);background:var(--card2)}
+    .det-photo.ph{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:700;color:#fff}
+    .det-name{font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--text);margin-top:12px}
+    .det-sub{font-size:12px;color:var(--text3);margin-top:3px}
+    .det-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px}
+    .det-item{display:flex;flex-direction:column;gap:4px}
+    .det-lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;font-weight:500}
+    .det-val{font-size:13px;color:var(--text);font-weight:500}
+    .det-item.full{grid-column:span 2}
+    .det-actions{padding:15px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
 
-/* ── Toast ── */
-.tw{position:fixed;bottom:22px;right:22px;z-index:200;display:flex;flex-direction:column;gap:7px}
-.toast{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 15px;display:flex;align-items:center;gap:9px;min-width:250px;box-shadow:var(--shadow-lg);animation:ti 0.28s ease}
-@keyframes ti{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
-.td{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.toast.success .td{background:var(--green)}.toast.error .td{background:var(--red)}.toast.info .td{background:var(--navy)}
+    /* ── Login ── */
+    .login-pg{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:300}
+    .login-pg.show{display:flex}
+    .login-card{background:var(--card);border:1px solid var(--border);border-radius:24px;width:400px;box-shadow:var(--shadow-lg);overflow:hidden}
+    .login-top{background:var(--navy);padding:0}
+    .login-banner{padding:30px 28px 22px;display:flex;align-items:center;gap:16px}
+    .login-info{flex:1}
+    .login-ttl{font-family:var(--font-display);font-size:20px;color:#fff;font-weight:700;line-height:1.2}
+    .login-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;text-transform:uppercase;letter-spacing:0.8px;font-weight:300}
+    .login-body{padding:24px 28px 28px}
 
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-</style>
+    /* ── Empty ── */
+    .empty{padding:55px 20px;text-align:center}
+    .ei{font-size:38px;margin-bottom:10px}.et{font-size:14px;font-weight:600;color:var(--text2);margin-bottom:5px}.es{font-size:12px;color:var(--text3)}
+
+    /* ── Toast ── */
+    .tw{position:fixed;bottom:22px;right:22px;z-index:200;display:flex;flex-direction:column;gap:7px}
+    .toast{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 15px;display:flex;align-items:center;gap:9px;min-width:250px;box-shadow:var(--shadow-lg);animation:ti 0.28s ease}
+    @keyframes ti{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+    .td{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    .toast.success .td{background:var(--green)}.toast.error .td{background:var(--red)}.toast.info .td{background:var(--navy)}
+
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+  </style>
 </head>
 <body>
 
@@ -321,6 +346,14 @@ td{padding:11px 15px;font-size:13px;vertical-align:middle}
   <div class="modal">
     <div class="mh"><h2 id="sm-t">Add New Student</h2><button class="mx" onclick="co('stu-m')">✕</button></div>
     <div class="mb">
+      <!-- Photo Upload Section -->
+      <div class="photo-box">
+        <div class="photo-prev empty" id="ph-prv">📷</div>
+        <input type="file" id="ph-inp" class="photo-up-inp" accept="image/*" onchange="handlePhotoUpload(event)"/>
+        <label for="ph-inp" class="photo-up-btn">📷 Upload Photo</label>
+        <input type="hidden" id="f-purl"/>
+      </div>
+
       <div class="fg2">
         <div class="fg full"><label class="fl">Student Name *</label><input class="fi" id="f-sn" placeholder="e.g. Rahul Sharma"/></div>
         <div class="fg"><label class="fl">Date of Birth *</label><input class="fi" id="f-dob" type="date"/></div>
@@ -358,6 +391,59 @@ td{padding:11px 15px;font-size:13px;vertical-align:middle}
     <div class="cb">
       <button class="btn btn-ghost" onclick="co('del-m')">Cancel</button>
       <button class="btn btn-danger" id="del-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── STUDENT DETAIL VIEW ────────────────────────────── -->
+<div class="overlay" id="detail-m">
+  <div class="detail-m">
+    <div class="mh">
+      <h2>Student Details</h2>
+      <button class="mx" onclick="co('detail-m')">✕</button>
+    </div>
+    <div class="det-photo-box">
+      <div class="det-photo ph" id="det-photo">?</div>
+      <div class="det-name" id="det-name">—</div>
+      <div class="det-sub" id="det-dob">—</div>
+    </div>
+    <div class="det-grid">
+      <div class="det-item">
+        <div class="det-lbl">Class</div>
+        <div class="det-val" id="det-class">—</div>
+      </div>
+      <div class="det-item">
+        <div class="det-lbl">Gender</div>
+        <div class="det-val" id="det-gender">—</div>
+      </div>
+      <div class="det-item">
+        <div class="det-lbl">School Name</div>
+        <div class="det-val" id="det-school">—</div>
+      </div>
+      <div class="det-item">
+        <div class="det-lbl">Mobile Number</div>
+        <div class="det-val" id="det-mobile">—</div>
+      </div>
+      <div class="det-item">
+        <div class="det-lbl">Parent Name</div>
+        <div class="det-val" id="det-parent">—</div>
+      </div>
+      <div class="det-item">
+        <div class="det-lbl">Parent Education</div>
+        <div class="det-val" id="det-parent-edu">—</div>
+      </div>
+      <div class="det-item">
+        <div class="det-lbl">Aadhar Card</div>
+        <div class="det-val" id="det-aadhar">—</div>
+      </div>
+      <div class="det-item full">
+        <div class="det-lbl">Address</div>
+        <div class="det-val" id="det-address">—</div>
+      </div>
+    </div>
+    <div class="det-actions">
+      <button class="btn btn-ghost" onclick="co('detail-m')">Close</button>
+      <button class="btn btn-primary" id="det-edit-btn">Edit Student</button>
     </div>
   </div>
 </div>
@@ -460,85 +546,99 @@ td{padding:11px 15px;font-size:13px;vertical-align:middle}
 <div class="tw" id="tw"></div>
 
 <script>
-const API='http://localhost:8080/api';
-const CLS=['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
-const AVC=['#1a2545','#c0392b','#1a6b3c','#1d5fa0','#b8620a','#7b2d8b','#0e7490'];
-let TOKEN=localStorage.getItem('t')||'', ME=JSON.parse(localStorage.getItem('me')||'null');
-let students=[],filtered=[],editId=null,rcStuId=null,curPg='dashboard',pg=1;
-const PZ=8;
-const $=id=>document.getElementById(id);
-const ini=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-const avc=n=>{let s=0;for(let c of(n||'A'))s+=c.charCodeAt(0);return AVC[s%AVC.length];};
-const fmt=d=>d?new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
-const fmtN=v=>v!=null&&v!==''?'₹'+Number(v).toLocaleString('en-IN'):'—';
-const ov=id=>$(id).classList.add('open');
-const co=id=>$(id).classList.remove('open');
+  const API='http://localhost:8080/api';
+  const CLS=['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
+  const AVC=['#1a2545','#c0392b','#1a6b3c','#1d5fa0','#b8620a','#7b2d8b','#0e7490'];
+  let TOKEN=localStorage.getItem('t')||'', ME=JSON.parse(localStorage.getItem('me')||'null');
+  let students=[],filtered=[],editId=null,rcStuId=null,curPg='dashboard',pg=1;
+  const PZ=8;
+  const $=id=>document.getElementById(id);
+  const ini=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  const avc=n=>{let s=0;for(let c of(n||'A'))s+=c.charCodeAt(0);return AVC[s%AVC.length];};
+  const fmt=d=>d?new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+  const fmtN=v=>v!=null&&v!==''?'₹'+Number(v).toLocaleString('en-IN'):'—';
+  const ov=id=>$(id).classList.add('open');
+  const co=id=>$(id).classList.remove('open');
 
-async function api(url,method='GET',body=null){
-  const o={method,headers:{'Content-Type':'application/json','Authorization':`Bearer ${TOKEN}`}};
-  if(body)o.body=JSON.stringify(body);
-  const r=await fetch(API+url,o);
-  if(r.status===401){logout();return null;}
-  if(!r.ok){const e=await r.json().catch(()=>({message:'Request failed'}));throw new Error(e.message||'Request failed');}
-  return r.status===204?null:r.json();
-}
+  async function api(url,method='GET',body=null){
+    const o={method,headers:{'Content-Type':'application/json','Authorization':`Bearer ${TOKEN}`}};
+    if(body)o.body=JSON.stringify(body);
+    const r=await fetch(API+url,o);
+    if(r.status===401){logout();return null;}
+    if(!r.ok){const e=await r.json().catch(()=>({message:'Request failed'}));throw new Error(e.message||'Request failed');}
+    return r.status===204?null:r.json();
+  }
 
-// ── Auth ─────────────────────────────────────────────────
-async function doLogin(){
-  const u=$('l-u').value.trim(),p=$('l-p').value.trim(),e=$('l-e');
-  e.style.display='none';
-  if(!u||!p){e.textContent='Enter username and password';e.style.display='block';return;}
-  try{
-    const r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
-    if(!r.ok){const er=await r.json();throw new Error(er.message||'Login failed');}
-    const d=await r.json();
-    if(d.role!=='ADMIN'){e.textContent='Access denied. Admin accounts only.';e.style.display='block';return;}
-    TOKEN=d.token;ME={username:d.username,role:d.role};
-    localStorage.setItem('t',TOKEN);localStorage.setItem('me',JSON.stringify(ME));
-    $('login-pg').classList.remove('show');$('app').style.display='flex';
-    boot();
-  }catch(err){e.textContent=err.message;e.style.display='block';}
-}
-function logout(){TOKEN='';ME=null;localStorage.removeItem('t');localStorage.removeItem('me');$('app').style.display='none';$('login-pg').classList.add('show');$('l-p').value='';}
+  // ── Auth ─────────────────────────────────────────────────
+  async function doLogin(){
+    const u=$('l-u').value.trim(),p=$('l-p').value.trim(),e=$('l-e');
+    e.style.display='none';
+    console.log('Login attempt - Username:', u);
+    if(!u||!p){e.textContent='Enter username and password';e.style.display='block';return;}
+    try{
+      console.log('Sending login request to:', API+'/auth/login');
+      const r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+      console.log('Response status:', r.status);
+      if(!r.ok){
+        const errorText = await r.text();
+        console.error('Login failed - Response:', errorText);
+        let er;
+        try{er=JSON.parse(errorText);}catch{er={message:errorText};}
+        throw new Error(er.message||'Login failed');
+      }
+      const d=await r.json();
+      console.log('Login success - Response:', d);
+      if(d.role!=='ADMIN'){e.textContent='Access denied. Admin accounts only.';e.style.display='block';return;}
+      TOKEN=d.token;ME={username:d.username,role:d.role};
+      localStorage.setItem('t',TOKEN);localStorage.setItem('me',JSON.stringify(ME));
+      console.log('Token saved, loading dashboard...');
+      $('login-pg').classList.remove('show');$('app').style.display='flex';
+      boot();
+    }catch(err){
+      console.error('Login error:', err);
+      e.textContent=err.message;e.style.display='block';
+    }
+  }
+  function logout(){TOKEN='';ME=null;localStorage.removeItem('t');localStorage.removeItem('me');$('app').style.display='none';$('login-pg').classList.add('show');$('l-p').value='';}
 
-// ── Boot ─────────────────────────────────────────────────
-function boot(){
-  if(!TOKEN){$('login-pg').classList.add('show');return;}
-  $('sb-nm').textContent=ME?.username||'Admin';
-  $('sb-av').textContent=ini(ME?.username||'Admin');
-  loadStudents();
-  gp('dashboard',document.querySelector('[data-page="dashboard"]'));
-}
+  // ── Boot ─────────────────────────────────────────────────
+  function boot(){
+    if(!TOKEN){$('login-pg').classList.add('show');return;}
+    $('sb-nm').textContent=ME?.username||'Admin';
+    $('sb-av').textContent=ini(ME?.username||'Admin');
+    loadStudents();
+    gp('dashboard',document.querySelector('[data-page="dashboard"]'));
+  }
 
-async function loadStudents(){
-  try{students=await api('/students')||[];filtered=[...students];$('nav-cnt').textContent=students.length;rc();}
-  catch(e){toast('Failed to load students','error');}
-}
+  async function loadStudents(){
+    try{students=await api('/students')||[];filtered=[...students];$('nav-cnt').textContent=students.length;rc();}
+    catch(e){toast('Failed to load students','error');}
+  }
 
-// ── Page routing ──────────────────────────────────────────
-function gp(pg2,el){
-  curPg=pg2;
-  document.querySelectorAll('.nav-item[data-page]').forEach(n=>n.classList.remove('active'));
-  if(el)el.classList.add('active');
-  const T={dashboard:'Dashboard',students:'Students',byclass:'Students by Class',receipts:'All Receipts',settings:'Settings'};
-  $('tb-t').textContent=T[pg2]||pg2;
-  rc();
-}
-function rc(){
-  if(curPg==='dashboard')rDash();
-  else if(curPg==='students')rStudents();
-  else if(curPg==='byclass')rByClass();
-  else if(curPg==='receipts')rReceipts();
-  else if(curPg==='settings')rSettings();
-}
+  // ── Page routing ──────────────────────────────────────────
+  function gp(pg2,el){
+    curPg=pg2;
+    document.querySelectorAll('.nav-item[data-page]').forEach(n=>n.classList.remove('active'));
+    if(el)el.classList.add('active');
+    const T={dashboard:'Dashboard',students:'Students',byclass:'Students by Class',receipts:'All Receipts',settings:'Settings'};
+    $('tb-t').textContent=T[pg2]||pg2;
+    rc();
+  }
+  function rc(){
+    if(curPg==='dashboard')rDash();
+    else if(curPg==='students')rStudents();
+    else if(curPg==='byclass')rByClass();
+    else if(curPg==='receipts')rReceipts();
+    else if(curPg==='settings')rSettings();
+  }
 
-// ── Dashboard ─────────────────────────────────────────────
-function rDash(){
-  const tot=students.length,male=students.filter(s=>s.gender==='Male').length,
-        fem=students.filter(s=>s.gender==='Female').length,
-        schs=[...new Set(students.map(s=>s.schoolName).filter(Boolean))].length;
-  const recent=[...students].slice(-6).reverse();
-  $('ct').innerHTML=`
+  // ── Dashboard ─────────────────────────────────────────────
+  function rDash(){
+    const tot=students.length,male=students.filter(s=>s.gender==='Male').length,
+            fem=students.filter(s=>s.gender==='Female').length,
+            schs=[...new Set(students.map(s=>s.schoolName).filter(Boolean))].length;
+    const recent=[...students].slice(-6).reverse();
+    $('ct').innerHTML=`
     <div class="stats-grid">
       <div class="scard"><div class="sc-top"><div class="sc-ico navy">👥</div></div><div class="sc-lbl">Total Students</div><div class="sc-val">${tot}</div><div class="sc-sub">All enrolled</div></div>
       <div class="scard"><div class="sc-top"><div class="sc-ico navy">🧑</div></div><div class="sc-lbl">Male Students</div><div class="sc-val">${male}</div><div class="sc-sub">${tot?Math.round(male/tot*100):0}% of total</div></div>
@@ -555,12 +655,12 @@ function rDash(){
       <td>${s.gender?`<span class="badge b-${s.gender.toLowerCase()}">${s.gender}</span>`:'—'}</td></tr>`).join('')}
       </tbody></table>`}
     </div>`;
-}
+  }
 
-// ── Students ──────────────────────────────────────────────
-function rStudents(){
-  const schs=[...new Set(students.map(s=>s.schoolName).filter(Boolean))];
-  $('ct').innerHTML=`
+  // ── Students ──────────────────────────────────────────────
+  function rStudents(){
+    const schs=[...new Set(students.map(s=>s.schoolName).filter(Boolean))];
+    $('ct').innerHTML=`
     <div class="tc">
       <div class="tc-head"><h2>All Students</h2>
         <div class="fr">
@@ -572,16 +672,16 @@ function rStudents(){
       <div id="stu-tb"></div>
       <div class="pag" id="pag"></div>
     </div>`;
-  rTable();
-}
+    rTable();
+  }
 
-function rTable(){
-  const start=(pg-1)*PZ,slice=filtered.slice(start,start+PZ);
-  const tb=$('stu-tb');if(!tb)return;
-  if(!filtered.length){tb.innerHTML=`<div class="empty"><div class="ei">🔍</div><div class="et">No students found</div><div class="es">Try a different search or filter</div></div>`;rPag();return;}
-  tb.innerHTML=`<table><thead><tr><th>Student</th><th>Class</th><th>School</th><th>Parent</th><th>Mobile</th><th>Actions</th></tr></thead><tbody>
+  function rTable(){
+    const start=(pg-1)*PZ,slice=filtered.slice(start,start+PZ);
+    const tb=$('stu-tb');if(!tb)return;
+    if(!filtered.length){tb.innerHTML=`<div class="empty"><div class="ei">🔍</div><div class="et">No students found</div><div class="es">Try a different search or filter</div></div>`;rPag();return;}
+    tb.innerHTML=`<table><thead><tr><th>Student</th><th>Class</th><th>School</th><th>Parent</th><th>Mobile</th><th>Actions</th></tr></thead><tbody>
   ${slice.map(s=>`<tr>
-    <td><div class="sc"><div class="sav" style="background:${avc(s.studentName)}">${ini(s.studentName)}</div><div><div class="sn">${s.studentName}</div><div class="sd">${fmt(s.dateOfBirth)}</div></div></div></td>
+    <td><div class="sc">${s.photoUrl?`<div class="sphoto" style="background-image:url(${API.replace('/api','')}${s.photoUrl})"></div>`:`<div class="sphoto ph" style="background:${avc(s.studentName)}">${ini(s.studentName)}</div>`}<div><div class="sn" style="cursor:pointer;color:var(--navy);text-decoration:underline" onclick="viewStudent('${s.id}');event.stopPropagation()">${s.studentName}</div><div class="sd">${fmt(s.dateOfBirth)}</div></div></div></td>
     <td>${s.className?`<span class="badge b-cls">${s.className}</span>`:'—'}</td>
     <td style="color:var(--text2)">${s.schoolName||'—'}</td>
     <td style="color:var(--text2)">${s.parentName||'—'}</td>
@@ -593,26 +693,26 @@ function rTable(){
     </div></td>
   </tr>`).join('')}
   </tbody></table>`;
-  rPag();
-}
+    rPag();
+  }
 
-function rPag(){
-  const bar=$('pag');if(!bar)return;
-  const tot=filtered.length,pages=Math.ceil(tot/PZ),s=(pg-1)*PZ+1,e=Math.min(pg*PZ,tot);
-  bar.innerHTML=`<span class="pag-i">${tot===0?'No results':`${s}–${e} of ${tot} students`}</span>
+  function rPag(){
+    const bar=$('pag');if(!bar)return;
+    const tot=filtered.length,pages=Math.ceil(tot/PZ),s=(pg-1)*PZ+1,e=Math.min(pg*PZ,tot);
+    bar.innerHTML=`<span class="pag-i">${tot===0?'No results':`${s}–${e} of ${tot} students`}</span>
   <div class="pag-b">
     <button class="pb" onclick="goP(${pg-1})" ${pg===1?'disabled':''}>‹</button>
     ${Array.from({length:Math.min(pages,5)},(_,i)=>i+1).map(p=>`<button class="pb ${p===pg?'active':''}" onclick="goP(${p})">${p}</button>`).join('')}
     <button class="pb" onclick="goP(${pg+1})" ${pg>=pages?'disabled':''}>›</button>
   </div>`;
-}
-function goP(p){const pages=Math.ceil(filtered.length/PZ);if(p<1||p>pages)return;pg=p;rTable();}
+  }
+  function goP(p){const pages=Math.ceil(filtered.length/PZ);if(p<1||p>pages)return;pg=p;rTable();}
 
-// ── By Class ──────────────────────────────────────────────
-function rByClass(sel){
-  sel=sel||CLS[0];
-  const cls=students.filter(s=>s.className===sel);
-  $('ct').innerHTML=`
+  // ── By Class ──────────────────────────────────────────────
+  function rByClass(sel){
+    sel=sel||CLS[0];
+    const cls=students.filter(s=>s.className===sel);
+    $('ct').innerHTML=`
     <div class="ctabs">${CLS.map(c=>`<div class="ctab ${c===sel?'active':''}" onclick="rByClass('${c}')">${c} <span style="opacity:0.55;font-size:10px">(${students.filter(s=>s.className===c).length})</span></div>`).join('')}</div>
     <div class="tc">
       <div class="tc-head"><h2>${sel} Standard &nbsp;<span style="font-size:13px;font-weight:400;color:var(--text3)">${cls.length} student${cls.length!==1?'s':''}</span></h2>
@@ -620,7 +720,7 @@ function rByClass(sel){
       ${cls.length===0?`<div class="empty"><div class="ei">📚</div><div class="et">No students in ${sel} standard</div><div class="es">Add students to this class</div></div>`:`
       <table><thead><tr><th>Student</th><th>School</th><th>Gender</th><th>Parent</th><th>Mobile</th><th>Actions</th></tr></thead><tbody>
       ${cls.map(s=>`<tr>
-        <td><div class="sc"><div class="sav" style="background:${avc(s.studentName)}">${ini(s.studentName)}</div><div><div class="sn">${s.studentName}</div><div class="sd">${fmt(s.dateOfBirth)}</div></div></div></td>
+        <td><div class="sc">${s.photoUrl?`<div class="sphoto" style="background-image:url(${API.replace('/api','')}${s.photoUrl})"></div>`:`<div class="sphoto ph" style="background:${avc(s.studentName)}">${ini(s.studentName)}</div>`}<div><div class="sn" style="cursor:pointer;color:var(--navy);text-decoration:underline" onclick="viewStudent('${s.id}');event.stopPropagation()">${s.studentName}</div><div class="sd">${fmt(s.dateOfBirth)}</div></div></div></td>
         <td style="color:var(--text2)">${s.schoolName||'—'}</td>
         <td>${s.gender?`<span class="badge b-${s.gender.toLowerCase()}">${s.gender}</span>`:'—'}</td>
         <td style="color:var(--text2)">${s.parentName||'—'}</td>
@@ -633,18 +733,18 @@ function rByClass(sel){
       </tr>`).join('')}
       </tbody></table>`}
     </div>`;
-}
+  }
 
-// ── All Receipts ──────────────────────────────────────────
-async function rReceipts(){
-  $('ct').innerHTML=`<div class="tc"><div class="tc-head"><h2>All Fee Receipts</h2></div><div id="all-rc"><div class="empty"><div class="ei">⏳</div><div class="et">Loading…</div></div></div></div>`;
-  try{
-    const all=[];
-    for(const s of students.slice(0,60)){const rs=await api(`/receipts/student/${s.id}`)||[];all.push(...rs);}
-    all.sort((a,b)=>new Date(b.paymentDate)-new Date(a.paymentDate));
-    const el=$('all-rc');
-    if(!all.length){el.innerHTML=`<div class="empty"><div class="ei">🧾</div><div class="et">No receipts yet</div><div class="es">Generate a fee receipt from the Students page</div></div>`;return;}
-    el.innerHTML=`<table><thead><tr><th>Rec. No.</th><th>Student</th><th>Class</th><th>Date</th><th>Amount Paid</th><th>Total Fees</th><th>Remaining</th></tr></thead><tbody>
+  // ── All Receipts ──────────────────────────────────────────
+  async function rReceipts(){
+    $('ct').innerHTML=`<div class="tc"><div class="tc-head"><h2>All Fee Receipts</h2></div><div id="all-rc"><div class="empty"><div class="ei">⏳</div><div class="et">Loading…</div></div></div></div>`;
+    try{
+      const all=[];
+      for(const s of students.slice(0,60)){const rs=await api(`/receipts/student/${s.id}`)||[];all.push(...rs);}
+      all.sort((a,b)=>new Date(b.paymentDate)-new Date(a.paymentDate));
+      const el=$('all-rc');
+      if(!all.length){el.innerHTML=`<div class="empty"><div class="ei">🧾</div><div class="et">No receipts yet</div><div class="es">Generate a fee receipt from the Students page</div></div>`;return;}
+      el.innerHTML=`<table><thead><tr><th>Rec. No.</th><th>Student</th><th>Class</th><th>Date</th><th>Amount Paid</th><th>Total Fees</th><th>Remaining</th></tr></thead><tbody>
     ${all.map(r=>`<tr>
       <td style="font-family:monospace;font-size:12px;color:var(--navy);font-weight:700">${r.receiptNumber}</td>
       <td><div class="sc"><div class="sav" style="background:${avc(r.studentName)};width:26px;height:26px;font-size:9px">${ini(r.studentName)}</div>${r.studentName}</div></td>
@@ -655,12 +755,12 @@ async function rReceipts(){
       <td style="color:var(--red)">${fmtN(r.remainingFees)}</td>
     </tr>`).join('')}
     </tbody></table>`;
-  }catch(e){toast('Failed to load receipts','error');}
-}
+    }catch(e){toast('Failed to load receipts','error');}
+  }
 
-// ── Settings ──────────────────────────────────────────────
-async function rSettings(){
-  $('ct').innerHTML=`
+  // ── Settings ──────────────────────────────────────────────
+  async function rSettings(){
+    $('ct').innerHTML=`
     <div class="s-grid">
       <div class="s-sec">
         <h3>Create New Admin</h3>
@@ -675,237 +775,302 @@ async function rSettings(){
         <div class="a-list" id="a-list">Loading…</div>
       </div>
     </div>`;
-  try{
-    const admins=await api('/auth/admin/list')||[];
-    $('a-list').innerHTML=admins.length===0?'<div style="font-size:13px;color:var(--text3)">No admins found</div>'
-      :admins.map(a=>`<div class="a-item"><div class="a-av">${ini(a)}</div><div class="a-name">${a}</div>${a===ME?.username?`<span class="badge b-rec">You</span>`:''}</div>`).join('');
-  }catch(e){$('a-list').innerHTML='<div style="font-size:13px;color:var(--red)">Failed to load</div>';}
-}
+    try{
+      const admins=await api('/auth/admin/list')||[];
+      $('a-list').innerHTML=admins.length===0?'<div style="font-size:13px;color:var(--text3)">No admins found</div>'
+              :admins.map(a=>`<div class="a-item"><div class="a-av">${ini(a)}</div><div class="a-name">${a}</div>${a===ME?.username?`<span class="badge b-rec">You</span>`:''}</div>`).join('');
+    }catch(e){$('a-list').innerHTML='<div style="font-size:13px;color:var(--red)">Failed to load</div>';}
+  }
 
-async function createAdmin(){
-  const u=$('a-u').value.trim(),p=$('a-p').value,c=$('a-cp').value,e=$('a-e');
-  e.style.display='none';
-  if(!u||!p){e.textContent='Username and password required';e.style.display='block';return;}
-  if(p.length<6){e.textContent='Password must be at least 6 characters';e.style.display='block';return;}
-  if(p!==c){e.textContent='Passwords do not match';e.style.display='block';return;}
-  try{
-    await api('/auth/admin/create','POST',{username:u,password:p,role:'ADMIN'});
-    toast(`Admin "${u}" created`,'success');co('adm-m');
-    $('a-u').value='';$('a-p').value='';$('a-cp').value='';
-    if(curPg==='settings')rSettings();
-  }catch(err){e.textContent=err.message;e.style.display='block';}
-}
+  async function createAdmin(){
+    const u=$('a-u').value.trim(),p=$('a-p').value,c=$('a-cp').value,e=$('a-e');
+    e.style.display='none';
+    if(!u||!p){e.textContent='Username and password required';e.style.display='block';return;}
+    if(p.length<6){e.textContent='Password must be at least 6 characters';e.style.display='block';return;}
+    if(p!==c){e.textContent='Passwords do not match';e.style.display='block';return;}
+    try{
+      await api('/auth/admin/create','POST',{username:u,password:p,role:'ADMIN'});
+      toast(`Admin "${u}" created`,'success');co('adm-m');
+      $('a-u').value='';$('a-p').value='';$('a-cp').value='';
+      if(curPg==='settings')rSettings();
+    }catch(err){e.textContent=err.message;e.style.display='block';}
+  }
 
-// ── Add / Edit Student ────────────────────────────────────
-function openAdd(){
-  editId=null;$('sm-t').textContent='Add New Student';$('sm-sv').textContent='Save Student';
-  ['f-sn','f-dob','f-cls','f-gen','f-sch','f-par','f-ped','f-mob','f-aad','f-addr'].forEach(id=>{const el=$(id);if(el)el.value='';});
-  $('sm-e').style.display='none';ov('stu-m');
-}
-function openEdit(id){
-  const s=students.find(x=>x.id===id);if(!s)return;
-  editId=id;$('sm-t').textContent='Edit Student';$('sm-sv').textContent='Update Student';
-  $('f-sn').value=s.studentName||'';$('f-dob').value=s.dateOfBirth||'';
-  $('f-cls').value=s.className||'';$('f-gen').value=s.gender||'';
-  $('f-sch').value=s.schoolName||'';$('f-par').value=s.parentName||'';
-  $('f-ped').value=s.parentEducation||'';$('f-mob').value=s.mobileNo||'';
-  $('f-aad').value=s.aadharCard||'';$('f-addr').value=s.address||'';
-  $('sm-e').style.display='none';ov('stu-m');
-}
-async function saveStu(){
-  const name=$('f-sn').value.trim(),dob=$('f-dob').value,e=$('sm-e');
-  e.style.display='none';
-  if(!name){e.textContent='Student name is required';e.style.display='block';return;}
-  if(!dob){e.textContent='Date of birth is required';e.style.display='block';return;}
-  const payload={studentName:name,dateOfBirth:dob,className:$('f-cls').value,gender:$('f-gen').value,
-    schoolName:$('f-sch').value,parentName:$('f-par').value,parentEducation:$('f-ped').value,
-    mobileNo:$('f-mob').value,aadharCard:$('f-aad').value,address:$('f-addr').value};
-  try{
-    if(editId){await api(`/students/${editId}`,'PUT',payload);toast('Student updated','success');}
-    else{await api('/students','POST',payload);toast('Student added','success');}
-    co('stu-m');await loadStudents();
-  }catch(err){e.textContent=err.message;e.style.display='block';}
-}
-
-// ── Delete ────────────────────────────────────────────────
-function openDel(id,name){
-  $('del-msg').textContent=`Delete "${name}"? This cannot be undone.`;
-  $('del-btn').onclick=()=>doDel(id);ov('del-m');
-}
-async function doDel(id){
-  try{await api(`/students/${id}`,'DELETE');toast('Student deleted','success');co('del-m');await loadStudents();}
-  catch(e){toast(e.message,'error');co('del-m');}
-}
-
-// ── Receipt ───────────────────────────────────────────────
-async function openRcpt(id,name){
-  rcStuId=id;$('rc-t').textContent=`Fee Receipt — ${name}`;
-  $('rc-sn').value=name;
-  ['rc-af','rc-tf','rc-rf','rc-ap','rc-rm'].forEach(id=>{$(id).value='';});
-  $('rc-dt').value=new Date().toISOString().split('T')[0];
-  $('rc-fd').value='';
-  $('rc-e').style.display='none';
-  $('rc-form').style.display='block';$('rc-preview').style.display='none';$('ph-wrap').style.display='none';
-  $('rc-foot').innerHTML=`<button class="btn btn-ghost" onclick="co('rc-m')">Cancel</button><button class="btn btn-primary" onclick="createReceipt()">Generate Receipt</button>`;
-  ov('rc-m');
-  try{
-    const hist=await api(`/receipts/student/${id}`)||[];
-    if(hist.length>0){
-      $('ph-wrap').style.display='block';
-      $('ph-list').innerHTML=hist.map(r=>`<div class="ph-item"><div class="ph-num">${r.receiptNumber}</div><div class="ph-date">${fmt(r.paymentDate)}</div><div class="ph-amt">${fmtN(r.feeAmountPaid)}</div></div>`).join('');
+  // ── Add / Edit Student ────────────────────────────────────
+  function openAdd(){
+    editId=null;$('sm-t').textContent='Add New Student';$('sm-sv').textContent='Save Student';
+    ['f-sn','f-dob','f-cls','f-gen','f-sch','f-par','f-ped','f-mob','f-aad','f-addr','f-purl'].forEach(id=>{const el=$(id);if(el)el.value='';});
+    $('sm-e').style.display='none';
+    // Reset photo
+    const prv=$('ph-prv');prv.className='photo-prev empty';prv.innerHTML='📷';
+    ov('stu-m');
+  }
+  function openEdit(id){
+    const s=students.find(x=>x.id===id);if(!s)return;
+    editId=id;$('sm-t').textContent='Edit Student';$('sm-sv').textContent='Update Student';
+    $('f-sn').value=s.studentName||'';$('f-dob').value=s.dateOfBirth||'';
+    $('f-cls').value=s.className||'';$('f-gen').value=s.gender||'';
+    $('f-sch').value=s.schoolName||'';$('f-par').value=s.parentName||'';
+    $('f-ped').value=s.parentEducation||'';$('f-mob').value=s.mobileNo||'';
+    $('f-aad').value=s.aadharCard||'';$('f-addr').value=s.address||'';
+    $('f-purl').value=s.photoUrl||'';
+    // Load photo
+    const prv=$('ph-prv');
+    if(s.photoUrl){
+      prv.className='photo-prev';
+      prv.innerHTML=`<img src="${API.replace('/api','')}${s.photoUrl}" style="width:100%;height:100%;object-fit:contain;border-radius:8px">`;
     }
-  }catch(e){}
-}
+    else{prv.className='photo-prev empty';prv.innerHTML='📷';}
+    $('sm-e').style.display='none';ov('stu-m');
+  }
 
-async function createReceipt(){
-  const dt=$('rc-dt').value,e=$('rc-e');
-  e.style.display='none';
-  if(!dt){e.textContent='Payment date is required';e.style.display='block';return;}
-  const payload={
-    studentId:rcStuId,
-    admissionFees:$('rc-af').value?parseFloat($('rc-af').value):null,
-    totalFees:$('rc-tf').value?parseFloat($('rc-tf').value):null,
-    remainingFees:$('rc-rf').value?parseFloat($('rc-rf').value):null,
-    feeAmountPaid:$('rc-ap').value?parseFloat($('rc-ap').value):null,
-    paymentDate:dt,
-    totalFeesDatedOn:$('rc-fd').value||null,
-    remarks:$('rc-rm').value||null
-  };
-  try{
-    const r=await api('/receipts','POST',payload);
-    const stu=students.find(s=>s.id===rcStuId)||{};
-    // Populate preview exactly matching physical receipt
-    $('pr-rn').textContent=r.receiptNumber;
-    $('pr-dt').textContent=fmt(r.paymentDate);
-    $('pr-mob').textContent=r.mobileNo||'—';
-    $('pr-sn').textContent=r.studentName||'—';
-    $('pr-pn').textContent=r.parentName||'—';
-    $('pr-std').textContent=r.className||'—';
-    $('pr-sch').textContent=r.schoolName||'—';
-    $('pr-addr').textContent=r.address||stu.address||'—';
-    $('pr-af').textContent=fmtN(r.admissionFees);
-    $('pr-tf').textContent=fmtN(r.totalFees);
-    $('pr-rf').textContent=fmtN(r.remainingFees);
-    $('pr-fd').textContent=r.totalFeesDatedOn?fmt(r.totalFeesDatedOn):'—';
-    $('rc-form').style.display='none';$('rc-preview').style.display='block';
-    $('rc-foot').innerHTML=`<button class="btn btn-ghost" onclick="co('rc-m')">Close</button><button class="btn btn-green" onclick="dlPDF('${r.receiptNumber}')">⬇ Download PDF</button>`;
-    toast('Receipt '+r.receiptNumber+' generated','success');
-  }catch(err){e.textContent=err.message;e.style.display='block';}
-}
+  // ── Photo Upload ──────────────────────────────────────────
+  async function handlePhotoUpload(event){
+    const file=event.target.files[0];if(!file)return;
+    if(file.size>5*1024*1024){toast('Photo must be under 5MB','error');return;}
+    if(!file.type.startsWith('image/')){toast('Please upload an image file','error');return;}
+    // Preview
+    const reader=new FileReader();
+    reader.onload=(e)=>{
+      const prv=$('ph-prv');
+      prv.className='photo-prev';
+      prv.innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:contain;border-radius:8px">`;
+    };
+    reader.readAsDataURL(file);
+    // Upload
+    const fd=new FormData();fd.append('file',file);
+    try{
+      const res=await fetch(`${API}/files/upload-photo`,{method:'POST',headers:{'Authorization':`Bearer ${TOKEN}`},body:fd});
+      if(!res.ok)throw new Error('Upload failed');
+      const data=await res.json();
+      $('f-purl').value=data.photoUrl;
+      toast('Photo uploaded','success');
+    }catch(err){toast('Failed to upload photo','error');}
+  }
 
-function dlPDF(recNum){
-  const{jsPDF}=window.jspdf;
-  const doc=new jsPDF({unit:'mm',format:'a5',orientation:'landscape'});
-  const W=210,M=8;
-  // Outer border
-  doc.setDrawColor(30,30,30);doc.setLineWidth(1);doc.rect(M,M,W-M*2,140,);
-  doc.setLineWidth(0.4);doc.rect(M+2,M+2,W-M*2-4,136);
-  // Header area
-  doc.setFillColor(255,255,255);
-  // Tagline
-  doc.setFont('helvetica','italic');doc.setFontSize(7.5);doc.setTextColor(90,85,80);
-  doc.text('Welcome For Our New Visions With High Goals...',M+4,M+8);
-  // Institute name
-  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(26,37,69);
-  doc.text('BRAMHAA COACHING CLASSES',M+4,M+17);
-  // Address
-  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(80,76,70);
-  doc.text('4th Floor, Chatrapati Capital, Chakan-Shikrapur Road, opp. Shantanu hotel, Chakan, Khed, Pune - 410 501',M+4,M+22);
-  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
-  doc.text('Contact : 8637727547',W/2,M+27,{align:'center'});
-  // Rec No box (top right)
-  const rn=$('pr-rn').textContent,dt=$('pr-dt').textContent;
-  doc.setDrawColor(50,50,50);doc.setLineWidth(0.5);
-  doc.rect(W-M-36,M+2,34,12);
-  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
-  doc.text('Rec. No.',W-M-34,M+8);
-  doc.setFontSize(11);doc.text(rn.replace(/BCC-\d+-/,''),W-M-16,M+8);
-  doc.rect(W-M-36,M+14,34,9);
-  doc.setFontSize(7.5);doc.text('Date : '+dt,W-M-34,M+20);
-  // Divider
-  doc.setDrawColor(50,50,50);doc.setLineWidth(0.5);
-  doc.line(M,M+30,W-M,M+30);
-  // RECEIPT black bar
-  doc.setFillColor(60,60,60);doc.rect(W/2-18,M+31,36,7,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(255,255,255);
-  doc.text('RECEIPT',W/2,M+36,{align:'center'});
-  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
-  doc.text('Mob.No.: '+$('pr-mob').textContent,W-M-5,M+36,{align:'right'});
-  doc.line(M,M+38,W-M,M+38);
-  // Body rows
-  doc.setTextColor(30,30,25);
-  const row=(label,val,x,y,w)=>{
-    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(label,x,y);
-    doc.setFont('helvetica','normal');doc.setFontSize(8.5);
-    doc.text(String(val),x+w,y);
-    doc.setDrawColor(100,100,100);doc.setLineWidth(0.3);
-    doc.line(x+w,y+0.5,x+w+55,y+0.5);
-  };
-  let y=M+45;
-  row('Student Name :  ',$('pr-sn').textContent,M+4,y,28);y+=8;
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Parents Name :  ',M+4,y);
-  doc.setFont('helvetica','normal');doc.text($('pr-pn').textContent,M+32,y);
-  doc.line(M+32,y+0.5,M+95,y+0.5);
-  doc.setFont('helvetica','bold');doc.text('Std.:  ',M+100,y);
-  doc.setFont('helvetica','normal');doc.text($('pr-std').textContent,M+112,y);
-  doc.line(M+112,y+0.5,W-M-5,y+0.5);
-  y+=8;
-  row('School Name  ',$('pr-sch').textContent,M+4,y,28);y+=8;
-  // Address + For Bramhaa
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Add.:  ',M+4,y);
-  doc.setFont('helvetica','normal');doc.text($('pr-addr').textContent,M+15,y);
-  doc.line(M+15,y+0.5,M+82,y+0.5);
-  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('For Bramhaa Coaching Classes',M+86,y);
-  y+=8;
-  // Fee rows
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Admission Fees :  ',M+4,y);
-  doc.setFont('helvetica','normal');doc.text($('pr-af').textContent,M+38,y);
-  doc.line(M+38,y+0.5,M+82,y+0.5);
-  doc.setFont('helvetica','bold');doc.text('Total Fees :  ',M+86,y);
-  doc.setFont('helvetica','normal');doc.text($('pr-tf').textContent,M+110,y);
-  doc.line(M+110,y+0.5,W-M-5,y+0.5);
-  y+=8;
-  row('Remaining Fees :  ',$('pr-rf').textContent,M+4,y,35);y+=8;
-  row('Total Fees Dated on :  ',$('pr-fd').textContent,M+4,y,42);y+=8;
-  // NOTE
-  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(40,40,40);
-  doc.text('NOTE : Fees Once Paid will not be Refunded.',W/2,y+2,{align:'center'});
-  y+=9;
-  doc.setDrawColor(80,80,80);doc.setLineWidth(0.4);doc.line(M+4,y,W-M-4,y);
-  // Footer
-  doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(30,30,25);
-  doc.text("Parent's / Student's Sign",M+4,y+8);
-  doc.text('For : Bramhaa Coaching Class',W-M-5,y+8,{align:'right'});
-  doc.save(recNum+'.pdf');
-  toast('PDF downloaded','success');
-}
+  // ── View Student Details ──────────────────────────────────
+  function viewStudent(id){
+    const s=students.find(x=>x.id===id);if(!s)return;
+    $('det-name').textContent=s.studentName;
+    $('det-dob').textContent='Born '+fmt(s.dateOfBirth);
+    $('det-class').textContent=s.className||'—';
+    $('det-gender').textContent=s.gender||'—';
+    $('det-school').textContent=s.schoolName||'—';
+    $('det-mobile').textContent=s.mobileNo||'—';
+    $('det-parent').textContent=s.parentName||'—';
+    $('det-parent-edu').textContent=s.parentEducation||'—';
+    $('det-aadhar').textContent=s.aadharCard||'—';
+    $('det-address').textContent=s.address||'—';
+    // Photo
+    const ph=$('det-photo');
+    if(s.photoUrl){
+      ph.className='det-photo';
+      ph.innerHTML=`<img src="${API.replace('/api','')}${s.photoUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`;
+    }else{
+      ph.className='det-photo ph';
+      ph.style.background=avc(s.studentName);
+      ph.innerHTML=ini(s.studentName);
+    }
+    // Edit button
+    $('det-edit-btn').onclick=()=>{co('detail-m');openEdit(id);};
+    ov('detail-m');
+  }
 
-// ── Search & Filter ───────────────────────────────────────
-function handleSearch(q){applyF(q);}
-function applyF(sq){
-  const q=(sq!==undefined?sq:$('s-in').value).toLowerCase();
-  const gc=$('fg-c'),gg=$('fg-g'),gs=$('fg-s');
-  const cls=gc?gc.value:'',gdr=gg?gg.value:'',sch=gs?gs.value:'';
-  filtered=students.filter(s=>{
-    const mq=!q||s.studentName.toLowerCase().includes(q)||(s.schoolName||'').toLowerCase().includes(q)||(s.parentName||'').toLowerCase().includes(q);
-    return mq&&(!cls||s.className===cls)&&(!gdr||s.gender===gdr)&&(!sch||s.schoolName===sch);
-  });
-  pg=1;rTable();
-}
+  // ── Save Student ──────────────────────────────────────────
+  async function saveStu(){
+    const name=$('f-sn').value.trim(),dob=$('f-dob').value,e=$('sm-e');
+    e.style.display='none';
+    if(!name){e.textContent='Student name is required';e.style.display='block';return;}
+    if(!dob){e.textContent='Date of birth is required';e.style.display='block';return;}
+    const payload={studentName:name,dateOfBirth:dob,className:$('f-cls').value,gender:$('f-gen').value,
+      schoolName:$('f-sch').value,parentName:$('f-par').value,parentEducation:$('f-ped').value,
+      mobileNo:$('f-mob').value,aadharCard:$('f-aad').value,address:$('f-addr').value,photoUrl:$('f-purl').value};
+    try{
+      if(editId){await api(`/students/${editId}`,'PUT',payload);toast('Student updated','success');}
+      else{await api('/students','POST',payload);toast('Student added','success');}
+      co('stu-m');await loadStudents();
+    }catch(err){e.textContent=err.message;e.style.display='block';}
+  }
 
-// ── Toast ─────────────────────────────────────────────────
-function toast(msg,type='info'){
-  const c=$('tw'),t=document.createElement('div');
-  t.className=`toast ${type}`;
-  t.innerHTML=`<div class="td"></div><span style="color:var(--text);font-size:13px;flex:1">${msg}</span>`;
-  c.appendChild(t);setTimeout(()=>t.remove(),3500);
-}
+  // ── Delete ────────────────────────────────────────────────
+  function openDel(id,name){
+    $('del-msg').textContent=`Delete "${name}"? This cannot be undone.`;
+    $('del-btn').onclick=()=>doDel(id);ov('del-m');
+  }
+  async function doDel(id){
+    try{await api(`/students/${id}`,'DELETE');toast('Student deleted','success');co('del-m');await loadStudents();}
+    catch(e){toast(e.message,'error');co('del-m');}
+  }
 
-// Close overlay on bg click
-document.querySelectorAll('.overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)co(o.id);});});
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login-pg').classList.contains('show'))doLogin();});
+  // ── Receipt ───────────────────────────────────────────────
+  async function openRcpt(id,name){
+    rcStuId=id;$('rc-t').textContent=`Fee Receipt — ${name}`;
+    $('rc-sn').value=name;
+    ['rc-af','rc-tf','rc-rf','rc-ap','rc-rm'].forEach(id=>{$(id).value='';});
+    $('rc-dt').value=new Date().toISOString().split('T')[0];
+    $('rc-fd').value='';
+    $('rc-e').style.display='none';
+    $('rc-form').style.display='block';$('rc-preview').style.display='none';$('ph-wrap').style.display='none';
+    $('rc-foot').innerHTML=`<button class="btn btn-ghost" onclick="co('rc-m')">Cancel</button><button class="btn btn-primary" onclick="createReceipt()">Generate Receipt</button>`;
+    ov('rc-m');
+    try{
+      const hist=await api(`/receipts/student/${id}`)||[];
+      if(hist.length>0){
+        $('ph-wrap').style.display='block';
+        $('ph-list').innerHTML=hist.map(r=>`<div class="ph-item"><div class="ph-num">${r.receiptNumber}</div><div class="ph-date">${fmt(r.paymentDate)}</div><div class="ph-amt">${fmtN(r.feeAmountPaid)}</div></div>`).join('');
+      }
+    }catch(e){}
+  }
 
-if(TOKEN&&ME){$('login-pg').classList.remove('show');$('app').style.display='flex';boot();}
+  async function createReceipt(){
+    const dt=$('rc-dt').value,e=$('rc-e');
+    e.style.display='none';
+    if(!dt){e.textContent='Payment date is required';e.style.display='block';return;}
+    const payload={
+      studentId:rcStuId,
+      admissionFees:$('rc-af').value?parseFloat($('rc-af').value):null,
+      totalFees:$('rc-tf').value?parseFloat($('rc-tf').value):null,
+      remainingFees:$('rc-rf').value?parseFloat($('rc-rf').value):null,
+      feeAmountPaid:$('rc-ap').value?parseFloat($('rc-ap').value):null,
+      paymentDate:dt,
+      totalFeesDatedOn:$('rc-fd').value||null,
+      remarks:$('rc-rm').value||null
+    };
+    try{
+      const r=await api('/receipts','POST',payload);
+      const stu=students.find(s=>s.id===rcStuId)||{};
+      // Populate preview exactly matching physical receipt
+      $('pr-rn').textContent=r.receiptNumber;
+      $('pr-dt').textContent=fmt(r.paymentDate);
+      $('pr-mob').textContent=r.mobileNo||'—';
+      $('pr-sn').textContent=r.studentName||'—';
+      $('pr-pn').textContent=r.parentName||'—';
+      $('pr-std').textContent=r.className||'—';
+      $('pr-sch').textContent=r.schoolName||'—';
+      $('pr-addr').textContent=r.address||stu.address||'—';
+      $('pr-af').textContent=fmtN(r.admissionFees);
+      $('pr-tf').textContent=fmtN(r.totalFees);
+      $('pr-rf').textContent=fmtN(r.remainingFees);
+      $('pr-fd').textContent=r.totalFeesDatedOn?fmt(r.totalFeesDatedOn):'—';
+      $('rc-form').style.display='none';$('rc-preview').style.display='block';
+      $('rc-foot').innerHTML=`<button class="btn btn-ghost" onclick="co('rc-m')">Close</button><button class="btn btn-green" onclick="dlPDF('${r.receiptNumber}')">⬇ Download PDF</button>`;
+      toast('Receipt '+r.receiptNumber+' generated','success');
+    }catch(err){e.textContent=err.message;e.style.display='block';}
+  }
+
+  function dlPDF(recNum){
+    const{jsPDF}=window.jspdf;
+    const doc=new jsPDF({unit:'mm',format:'a5',orientation:'landscape'});
+    const W=210,M=8;
+    // Outer border
+    doc.setDrawColor(30,30,30);doc.setLineWidth(1);doc.rect(M,M,W-M*2,140,);
+    doc.setLineWidth(0.4);doc.rect(M+2,M+2,W-M*2-4,136);
+    // Header area
+    doc.setFillColor(255,255,255);
+    // Tagline
+    doc.setFont('helvetica','italic');doc.setFontSize(7.5);doc.setTextColor(90,85,80);
+    doc.text('Welcome For Our New Visions With High Goals...',M+4,M+8);
+    // Institute name
+    doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(26,37,69);
+    doc.text('BRAMHAA COACHING CLASSES',M+4,M+17);
+    // Address
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(80,76,70);
+    doc.text('4th Floor, Chatrapati Capital, Chakan-Shikrapur Road, opp. Shantanu hotel, Chakan, Khed, Pune - 410 501',M+4,M+22);
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
+    doc.text('Contact : 8637727547',W/2,M+27,{align:'center'});
+    // Rec No box (top right)
+    const rn=$('pr-rn').textContent,dt=$('pr-dt').textContent;
+    doc.setDrawColor(50,50,50);doc.setLineWidth(0.5);
+    doc.rect(W-M-36,M+2,34,12);
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
+    doc.text('Rec. No.',W-M-34,M+8);
+    doc.setFontSize(11);doc.text(rn.replace(/BCC-\d+-/,''),W-M-16,M+8);
+    doc.rect(W-M-36,M+14,34,9);
+    doc.setFontSize(7.5);doc.text('Date : '+dt,W-M-34,M+20);
+    // Divider
+    doc.setDrawColor(50,50,50);doc.setLineWidth(0.5);
+    doc.line(M,M+30,W-M,M+30);
+    // RECEIPT black bar
+    doc.setFillColor(60,60,60);doc.rect(W/2-18,M+31,36,7,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(255,255,255);
+    doc.text('RECEIPT',W/2,M+36,{align:'center'});
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30,30,25);
+    doc.text('Mob.No.: '+$('pr-mob').textContent,W-M-5,M+36,{align:'right'});
+    doc.line(M,M+38,W-M,M+38);
+    // Body rows
+    doc.setTextColor(30,30,25);
+    const row=(label,val,x,y,w)=>{
+      doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(label,x,y);
+      doc.setFont('helvetica','normal');doc.setFontSize(8.5);
+      doc.text(String(val),x+w,y);
+      doc.setDrawColor(100,100,100);doc.setLineWidth(0.3);
+      doc.line(x+w,y+0.5,x+w+55,y+0.5);
+    };
+    let y=M+45;
+    row('Student Name :  ',$('pr-sn').textContent,M+4,y,28);y+=8;
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Parents Name :  ',M+4,y);
+    doc.setFont('helvetica','normal');doc.text($('pr-pn').textContent,M+32,y);
+    doc.line(M+32,y+0.5,M+95,y+0.5);
+    doc.setFont('helvetica','bold');doc.text('Std.:  ',M+100,y);
+    doc.setFont('helvetica','normal');doc.text($('pr-std').textContent,M+112,y);
+    doc.line(M+112,y+0.5,W-M-5,y+0.5);
+    y+=8;
+    row('School Name  ',$('pr-sch').textContent,M+4,y,28);y+=8;
+    // Address + For Bramhaa
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Add.:  ',M+4,y);
+    doc.setFont('helvetica','normal');doc.text($('pr-addr').textContent,M+15,y);
+    doc.line(M+15,y+0.5,M+82,y+0.5);
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('For Bramhaa Coaching Classes',M+86,y);
+    y+=8;
+    // Fee rows
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('Admission Fees :  ',M+4,y);
+    doc.setFont('helvetica','normal');doc.text($('pr-af').textContent,M+38,y);
+    doc.line(M+38,y+0.5,M+82,y+0.5);
+    doc.setFont('helvetica','bold');doc.text('Total Fees :  ',M+86,y);
+    doc.setFont('helvetica','normal');doc.text($('pr-tf').textContent,M+110,y);
+    doc.line(M+110,y+0.5,W-M-5,y+0.5);
+    y+=8;
+    row('Remaining Fees :  ',$('pr-rf').textContent,M+4,y,35);y+=8;
+    row('Total Fees Dated on :  ',$('pr-fd').textContent,M+4,y,42);y+=8;
+    // NOTE
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(40,40,40);
+    doc.text('NOTE : Fees Once Paid will not be Refunded.',W/2,y+2,{align:'center'});
+    y+=9;
+    doc.setDrawColor(80,80,80);doc.setLineWidth(0.4);doc.line(M+4,y,W-M-4,y);
+    // Footer
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(30,30,25);
+    doc.text("Parent's / Student's Sign",M+4,y+8);
+    doc.text('For : Bramhaa Coaching Class',W-M-5,y+8,{align:'right'});
+    doc.save(recNum+'.pdf');
+    toast('PDF downloaded','success');
+  }
+
+  // ── Search & Filter ───────────────────────────────────────
+  function handleSearch(q){applyF(q);}
+  function applyF(sq){
+    const q=(sq!==undefined?sq:$('s-in').value).toLowerCase();
+    const gc=$('fg-c'),gg=$('fg-g'),gs=$('fg-s');
+    const cls=gc?gc.value:'',gdr=gg?gg.value:'',sch=gs?gs.value:'';
+    filtered=students.filter(s=>{
+      const mq=!q||s.studentName.toLowerCase().includes(q)||(s.schoolName||'').toLowerCase().includes(q)||(s.parentName||'').toLowerCase().includes(q);
+      return mq&&(!cls||s.className===cls)&&(!gdr||s.gender===gdr)&&(!sch||s.schoolName===sch);
+    });
+    pg=1;rTable();
+  }
+
+  // ── Toast ─────────────────────────────────────────────────
+  function toast(msg,type='info'){
+    const c=$('tw'),t=document.createElement('div');
+    t.className=`toast ${type}`;
+    t.innerHTML=`<div class="td"></div><span style="color:var(--text);font-size:13px;flex:1">${msg}</span>`;
+    c.appendChild(t);setTimeout(()=>t.remove(),3500);
+  }
+
+  // Close overlay on bg click
+  document.querySelectorAll('.overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)co(o.id);});});
+  document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login-pg').classList.contains('show'))doLogin();});
+
+  if(TOKEN&&ME){$('login-pg').classList.remove('show');$('app').style.display='flex';boot();}
 </script>
 </body>
 </html>

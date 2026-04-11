@@ -20,6 +20,7 @@ public class StudentMapper {
         s.setSchoolName(dto.getSchoolName());
         s.setAadharCard(dto.getAadharCard());
         s.setClassName(dto.getClassName());
+        s.setPhotoUrl(dto.getPhotoUrl());
         return s;
     }
 
@@ -36,6 +37,7 @@ public class StudentMapper {
         dto.setSchoolName(s.getSchoolName());
         dto.setAadharCard(s.getAadharCard());
         dto.setClassName(s.getClassName());
+        dto.setPhotoUrl(s.getPhotoUrl());
         return dto;
     }
 }
